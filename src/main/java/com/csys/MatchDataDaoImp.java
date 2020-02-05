@@ -1,15 +1,8 @@
 package com.csys;
-import com.TestAddPlayer;
-import com.TestNewCareerDetails;
-//import playerCareerDaoImp;
-import com.csys.PlayerProfile;
-import com.csys.PlayerProfileDaoImplementation;
-import com.csys.PlayerProfileDao;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 public class MatchDataDaoImp implements MatchDataDao {
@@ -57,7 +50,7 @@ public class MatchDataDaoImp implements MatchDataDao {
 		}
 	else {
 				System.out.println("Please create player Career");
-				TestNewCareerDetails.main(null);
+			//	TestNewCareerDetails.main(null);
 			   
 			}
 		}
