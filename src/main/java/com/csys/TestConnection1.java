@@ -14,7 +14,7 @@ public class TestConnection1 {
 	}*/
 	public static Connection getConnection() throws Exception {
 		 Class.forName("oracle.jdbc.driver.OracleDriver");
-		 String server = "192.168.56.215";
+		 String server = "localhost";
 		// String server = "CSLH2006";
 		 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@"+ server + ":1521:XE","system","oracle");
 			System.out.println(connection);

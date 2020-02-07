@@ -92,6 +92,8 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 				pc.fifty = rs.getInt("fifty");
 				pc.hundred = rs.getInt("hundred");
 				pc.best = rs.getInt("high_score");
+				pc.average=rs.getFloat("average");
+				pc.ranks = rs.getInt("ranks");
 				task.add(pc);
 			}
 		} else {

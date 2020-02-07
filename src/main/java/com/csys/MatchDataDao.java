@@ -8,5 +8,4 @@ public interface MatchDataDao {
 	
 	void updateCareer(String capNo,String format,int runs) throws Exception;
 	
-	
 }

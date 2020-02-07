@@ -8,5 +8,9 @@ public interface PlayerProfileDao {
 	
 	void updatePlayer(String capNo,int year) throws Exception;
 	
-	List <PlayerProfile> playerlist () throws Exception;
+	List <PlayerProfile> playerlist (String nation) throws Exception;
+	
+	List<String> getPlayerName () throws Exception ;
+	
+	
 	}

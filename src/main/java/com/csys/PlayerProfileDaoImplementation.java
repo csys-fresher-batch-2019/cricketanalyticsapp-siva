@@ -1,6 +1,5 @@
 package com.csys;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public  class PlayerProfileDaoImplementation implements PlayerProfileDao {
 			if(rs.next()) {
 			String sql = "update player_list set retired_year = "+year+" where cap_no = '"+capNo+"'";
 			System.out.println(sql);
-			int rows = st.executeUpdate(sql);
+			st.executeUpdate(sql);
 			System.out.println("Updated");
 			}
 			else {
@@ -42,11 +41,11 @@ public  class PlayerProfileDaoImplementation implements PlayerProfileDao {
 			}
 		}
 
-		public List<PlayerProfile> playerlist() throws Exception {
+		public List<PlayerProfile> playerlist(String nation) throws Exception {
 			// TODO Auto-generated method stub
 			Connection con1 = TestConnection1.getConnection();
 			Statement stmt = con1.createStatement();
-			String sql = "select * from player_list";
+			String sql = "select * from player_list where nation ='"+nation+"' ";
 			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			List<PlayerProfile> pl = new ArrayList<PlayerProfile>();
@@ -61,6 +60,20 @@ public  class PlayerProfileDaoImplementation implements PlayerProfileDao {
 				pl.add(pp);
 			}
 			return pl;
-		}	
-}
+		}
 
+		public List<String> getPlayerName() throws Exception {
+			// TODO Auto-generated method stub
+			Connection con1 = TestConnection1.getConnection();
+			Statement stmt = con1.createStatement();
+			String sql = "select player_name from player_list";
+			System.out.println(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			List<String> pl = new ArrayList<String>();
+			while(rs.next()) {
+			String name = rs.getString("player_name");
+			pl.add(name);
+		}	
+			return pl;
+}
+}
