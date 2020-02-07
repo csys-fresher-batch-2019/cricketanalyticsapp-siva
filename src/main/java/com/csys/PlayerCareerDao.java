@@ -7,13 +7,11 @@ import com.formatruns;
 
 public interface PlayerCareerDao {
 	
-	ArrayList<PlayerCareer> listallPlayersCareer (String format) throws Exception;
+	
 	
 	void newCareerDetails(String capNo,	String format,int matches,int runs,int fifty,int hundred,int best) throws Exception;
 	
 	ArrayList<PlayerCareer> getdetails (String capNo) throws Exception;
-	
-	ArrayList <Integer>getformatdetails(String capNo,String format) throws Exception;
 	
 	List<PlayerCareer> best  (String format,int r) throws Exception;
 	
