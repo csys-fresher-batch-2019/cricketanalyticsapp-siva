@@ -2,18 +2,12 @@ package com.csys;
 
 public class PlayerCareer {
 	 String capNo;
-	public String playerName;
+	 String playerName;
 	 String nation;
 	 String format;
 	int matches;
 	int runs;
 	int fifty;
-	/*@Override
-	public String toString() {
-		return "PlayerCareer [capNo=" + capNo + ", playerName=" + playerName + ", nation=" + nation + ", format="
-				+ format + ", matches=" + matches + ", runs=" + runs + ", fifty=" + fifty + ", hundred=" + hundred
-				+ ", best=" + best + ", average=" + average + ", ranks=" + ranks + "]";
-	}*/
 	int hundred;
 	int best;
 	float average;

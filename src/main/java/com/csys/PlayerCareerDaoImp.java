@@ -139,9 +139,9 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 		boolean res1 = false;
 
 		while (res.next()) {
-			formatruns p = new formatruns(sql, runs);
-			p.playerName = res.getString("player_name");
-			p.runs = res.getInt("runs");
+			formatruns p = new formatruns();
+			p.setPlayerName(res.getString("player_name"));
+			p.setRuns(res.getInt("runs"));
 			bst.add(p);
 			res1 = true;
 		}

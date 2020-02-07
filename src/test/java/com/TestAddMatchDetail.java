@@ -1,5 +1,7 @@
 package com;
 
+import java.util.Scanner;
+
 import com.csys.MatchDataDaoImp;
 
 public class TestAddMatchDetail {
@@ -8,9 +10,12 @@ public class TestAddMatchDetail {
 		// TODO Auto-generated method stub
 		
 		 MatchDataDaoImp obj = new MatchDataDaoImp();
-		 obj.addMatchDetail("i200", "t20", 45, "yet to update");
-		 obj.addMatchDetail("i278", "odi", 123, "yet to update");
-		 obj.addMatchDetail("i177", "odi", 90, "yet to update");
-		 obj.addMatchDetail("e227", "test",220, "yet to update");
+	     Scanner sr = new Scanner(System.in);
+	     System.out.println("Enter the capNo");
+	     String capNo = sr.next();
+	     System.out.println("Enter the format");
+	     String format = sr.next();
+	     System.out.println("Enter the runs scored");
+	     int runs = sr.nextInt();
 	}
 }

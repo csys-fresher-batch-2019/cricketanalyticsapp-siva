@@ -2,10 +2,10 @@ package com.csys;
 
 public class PlayerProfile {
 
-	public String capNo;
-	public String name;
-	public String nation;
-	public String style;
+    String capNo;
+	String name;
+	String nation;
+	String style;
     int debutYear;
     int retiredYear;
     

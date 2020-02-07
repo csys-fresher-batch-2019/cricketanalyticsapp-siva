@@ -30,11 +30,11 @@ public class MatchDataDaoImp implements MatchDataDao {
 	public void deleteMatchDetail(String status) throws Exception {
 		// TODO Auto-generated method stub
 		String sqladd = "delete from match_data where status =?";
-		try(Connection res = TestConnection1.getConnection();
-		PreparedStatement arr = res.prepareStatement(sqladd);){
+		try(Connection res = TestConnection1.getConnection();){
+		try(PreparedStatement arr = res.prepareStatement(sqladd);){
 		arr.setString(1, status);
 		arr.executeUpdate();
-		System.out.println(infoMessages.Delete_Match_Detail);}
+		System.out.println(infoMessages.Delete_Match_Detail);}}
 		catch(Exception e) {
 			throw new DBexception(errorMessages.DeleteStatus);
 		}

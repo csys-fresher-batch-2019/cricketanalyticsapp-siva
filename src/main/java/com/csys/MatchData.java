@@ -6,19 +6,32 @@ public class MatchData {
 	String format ;
 	Integer runs ;
 	String status ;
-	/**
-	 * @param capNo
-	 * @param format
-	 * @param runs
-	 * @param status
-	 */
-	public MatchData(String capNo, String format, Integer runs, String status) {
-		super();
+	
+	public String getCapNo() {
+		return capNo;
+	}
+	public void setCapNo(String capNo) {
 		this.capNo = capNo;
+	}
+	public String getFormat() {
+		return format;
+	}
+	public void setFormat(String format) {
 		this.format = format;
+	}
+	public Integer getRuns() {
+		return runs;
+	}
+	public void setRuns(Integer runs) {
 		this.runs = runs;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
 		this.status = status;
 	}
+	
 	@Override
 	public String toString() {
 		return "MatchData [capNo=" + capNo + ", format=" + format + ", runs=" + runs + ", status=" + status + "]";

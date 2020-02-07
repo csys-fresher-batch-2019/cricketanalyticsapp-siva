@@ -2,18 +2,43 @@ package com;
 
 public class formatruns {
 
-	public String playerName;
+	 String playerName;
 	
-	public int runs;
+	 int runs;
+	
+	
 	/**
-	 * @param playerName
-	 * @param runs
+	 * @return the playerName
 	 */
+	public String getPlayerName() {
+		return playerName;
+	}
 
-	public formatruns(String playerName, int runs) {
+
+	/**
+	 * @param playerName the playerName to set
+	 */
+	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
+	}
+
+
+	/**
+	 * @return the runs
+	 */
+	public int getRuns() {
+		return runs;
+	}
+
+
+	/**
+	 * @param runs the runs to set
+	 */
+	public void setRuns(int runs) {
 		this.runs = runs;
 	}
+
+
 	public String toString() {
 		return "formatruns [playerName=" + playerName + ", runs=" + runs + "]";
 	}
