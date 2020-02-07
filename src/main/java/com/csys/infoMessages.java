@@ -9,5 +9,6 @@ public class infoMessages {
 	 public static final String Duplicate_message = "Already career exist for the player ";
 	 public static final String Out_of_boundary = "None of the player cross the mark";
 	 public static final String Updation = "Updated";
+	 public static final String Duplicate_CapNo = "Cap number is already exist in the profile list";
 	
 }

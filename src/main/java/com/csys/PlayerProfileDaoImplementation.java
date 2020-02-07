@@ -8,46 +8,45 @@ import java.util.List;
 public  class PlayerProfileDaoImplementation implements PlayerProfileDao {
 
 			
-		public void addPlayer(String capNo, String name, String nation, String style,int debutYear) throws Exception {
-		// TODO Auto-generated method stub
-			Connection con1 = TestConnection1.getConnection();
-			Statement stmt = con1.createStatement();
-			ResultSet rs = stmt.executeQuery("select cap_no from player_list where cap_no='"+capNo+"'");
+		public void addPlayer(String capNo, String name, String nation, String style,int debutYear) throws DBexception {
+        	try(Connection con1 = TestConnection1.getConnection();
+			Statement stmt = con1.createStatement();){
+			try(ResultSet rs = stmt.executeQuery("select cap_no from player_list where cap_no='"+capNo+"'");){
 			if(rs.next()) {
-
-				System.out.println("capno already exist");
+				System.out.println(infoMessages.Duplicate_CapNo);
 			}
 			else {
 				String add = "insert into player_list(cap_no,player_name,nation,batting_style,debut_year) values ('"+capNo+"','"+name+"','"+nation+"','"+style+"',"+debutYear+")";
 				System.out.println(add);
 				int rows =stmt.executeUpdate(add);
 			System.out.println(rows);
-			}
-	}
+			}}
+        	}catch(Exception e) {
+        		throw new DBexception(errorMessages.NonSpecifyColumn);
+        	}
+		}
 
-		public void updatePlayer(String capNo,int year) throws Exception {
-			// TODO Auto-generated method stub
-			Connection con1 = TestConnection1.getConnection();
-			Statement st = con1.createStatement();
-			ResultSet rs = st.executeQuery("select cap_no from player_list where cap_no='"+capNo+"'");
+		public void updatePlayer(String capNo,int year) throws DBexception {
+			 try(Connection con1 = TestConnection1.getConnection();
+			Statement st = con1.createStatement();){
+			try(ResultSet rs = st.executeQuery("select cap_no from player_list where cap_no='"+capNo+"'");){
 			if(rs.next()) {
 			String sql = "update player_list set retired_year = "+year+" where cap_no = '"+capNo+"'";
 			System.out.println(sql);
 			st.executeUpdate(sql);
-			System.out.println("Updated");
-			}
-			else {
-				System.out.println("Enter the valid cap number");
+			System.out.println(infoMessages.Updation);
+			}}}
+			catch(Exception e) {
+				throw new DBexception(errorMessages.Invalid_capNo);
 			}
 		}
 
-		public List<PlayerProfile> playerlist(String nation) throws Exception {
-			// TODO Auto-generated method stub
-			Connection con1 = TestConnection1.getConnection();
-			Statement stmt = con1.createStatement();
+		public List<PlayerProfile> playerlist(String nation) throws DBexception {
+			try(Connection con1 = TestConnection1.getConnection();
+			Statement stmt = con1.createStatement();){
 			String sql = "select * from player_list where nation ='"+nation+"' ";
 			System.out.println(sql);
-			ResultSet rs = stmt.executeQuery(sql);
+			try(ResultSet rs = stmt.executeQuery(sql);){
 			List<PlayerProfile> pl = new ArrayList<PlayerProfile>();
 			while(rs.next()) {
 				PlayerProfile pp =new PlayerProfile();
@@ -60,20 +59,26 @@ public  class PlayerProfileDaoImplementation implements PlayerProfileDao {
 				pl.add(pp);
 			}
 			return pl;
+			}}catch (Exception e) {
+				throw new DBexception(errorMessages.Invalid_nation);
+			}
 		}
 
-		public List<String> getPlayerName() throws Exception {
-			// TODO Auto-generated method stub
-			Connection con1 = TestConnection1.getConnection();
-			Statement stmt = con1.createStatement();
+		public List<String> getPlayerName() throws DBexception {
+			try(Connection con1 = TestConnection1.getConnection();
+			Statement stmt = con1.createStatement();){
 			String sql = "select player_name from player_list";
 			System.out.println(sql);
-			ResultSet rs = stmt.executeQuery(sql);
+			try(ResultSet rs = stmt.executeQuery(sql);){
 			List<String> pl = new ArrayList<String>();
-			while(rs.next()) {
+			while(rs.next()){
 			String name = rs.getString("player_name");
 			pl.add(name);
 		}	
 			return pl;
+    }}  catch (Exception e) {
+	         throw new DBexception (errorMessages.Connection);
 }
+}
+
 }
