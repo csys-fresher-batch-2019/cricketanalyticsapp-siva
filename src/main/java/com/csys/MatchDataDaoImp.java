@@ -46,7 +46,7 @@ public class MatchDataDaoImp implements MatchDataDao {
 		PreparedStatement arr  = ci.prepareStatement(sql);){
 			arr.setString(1, capNo);
 			arr.setString(2, format);
-		ResultSet rs=arr.executeQuery();
+		try(ResultSet rs=arr.executeQuery();){
 		if(rs.next()) {
 			try(CallableStatement cs = ci.prepareCall("{ call update_career(?,?,?)}");){
 			cs.setString(1, capNo);
@@ -54,12 +54,12 @@ public class MatchDataDaoImp implements MatchDataDao {
 			cs.setInt(3, runs);
 		    cs.execute();
 			System.out.println(infoMessages.Update_Match_detail);
-		}}
+		}}}
 		
 		}catch(Exception e)
 	 {
 				throw new DBexception(errorMessages.CreateCareer);
 			   
 			}
-	}}
-
+	}
+}
