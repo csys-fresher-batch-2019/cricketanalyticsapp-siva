@@ -130,5 +130,7 @@ public class PlayerProfile {
 		return "PlayerProfile [capNo=" + capNo + ", name=" + name + ", nation=" + nation + ", style=" + style
 				+ ", debutYear=" + debutYear + ", retiredYear=" + retiredYear + "]";
 	}
+	
+	
 
 	}

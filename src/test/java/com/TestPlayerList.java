@@ -9,7 +9,6 @@ import com.csys.PlayerProfileDaoImplementation;
 public class TestPlayerList {
 
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter the nation");
 		String nation = sc.next();
@@ -18,6 +17,7 @@ public class TestPlayerList {
 		for (PlayerProfile pp : hd) {
 			System.out.println(pp);
 		}
+		sc.close();
 	}
 
 }

@@ -41,21 +41,21 @@ public class MatchDataDaoImp implements MatchDataDao {
 		}
 
 	public void updateCareer(String capNo, String format, int runs) throws DBexception {
-		try(
-		Connection ci = TestConnection1.getConnection();
-		Statement stmt = ci.createStatement();){
-		try(ResultSet rs=stmt.executeQuery("select cap_no,match_id from player_career where cap_no='" + capNo + "' and match_id='"
-				+ format + "'");){
+		String sql ="select cap_no,match_id from player_career where cap_no=? and match_id=?";
+		try(Connection ci = TestConnection1.getConnection();
+		PreparedStatement arr  = ci.prepareStatement(sql);){
+			arr.setString(1, capNo);
+			arr.setString(2, format);
+		ResultSet rs=arr.executeQuery();
 		if(rs.next()) {
 			try(CallableStatement cs = ci.prepareCall("{ call update_career(?,?,?)}");){
 			cs.setString(1, capNo);
 			cs.setString(2, format);
 			cs.setInt(3, runs);
-			//System.out.println("gdfgfg");
-			cs.execute();
+		    cs.execute();
 			System.out.println(infoMessages.Update_Match_detail);
 		}}
-		}
+		
 		}catch(Exception e)
 	 {
 				throw new DBexception(errorMessages.CreateCareer);
