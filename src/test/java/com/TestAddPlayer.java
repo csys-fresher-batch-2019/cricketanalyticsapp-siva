@@ -4,13 +4,16 @@ package com;
 
 import java.util.Scanner;
 
+import com.csys.PlayerCareerDaoImp;
 import com.csys.PlayerProfileDaoImplementation;
+import com.csys.infoMessages;
 
 public class TestAddPlayer {
 
 	public static void main(String[] args) throws Exception {
-		
+		boolean res = false;
 		PlayerProfileDaoImplementation add1 = new PlayerProfileDaoImplementation();
+		
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter cap number");
 		String capNo= sc.nextLine(); 
@@ -23,6 +26,14 @@ public class TestAddPlayer {
 		System.out.println("Enter Debut Year");
 		int debutYear= sc.nextInt();
 		add1.addPlayer(capNo,name,nation,style,debutYear);
+		System.out.println(infoMessages.Insert_Message);
+		if(res) {
+			PlayerCareerDaoImp obj = new PlayerCareerDaoImp();
+			obj.createNewCareer(capNo);
+		}
+		else {
+			System.out.println(infoMessages.Duplicate_message);
+		}
 	}
 	
 }

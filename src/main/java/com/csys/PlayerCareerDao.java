@@ -7,9 +7,11 @@ import com.formatruns;
 
 public interface PlayerCareerDao {
 	
+	boolean checkinsertCareerDetailForSpecificFormat(String capNo, String format) throws Exception ;
 	
+	void createNewCareer(String capNo) throws Exception;
 	
-	void newCareerDetails(String capNo,	String format,int matches,int runs,int fifty,int hundred,int best) throws Exception;
+	void insertCareerDetailForSpecificFormat(String capNo,String format,int matches,int runs,int fifty,int hundred,int best,float average) throws Exception;
 	
 	ArrayList<PlayerCareer> getdetails (String capNo) throws Exception;
 	
@@ -20,6 +22,8 @@ public interface PlayerCareerDao {
 	void updaterank (String format) throws Exception;
 	
 	List<PlayerCareer> displaytopbatsman(String format ,int n) throws Exception ;
+	
+	
 }
 	
 

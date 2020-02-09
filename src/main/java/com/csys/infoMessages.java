@@ -10,5 +10,6 @@ public class infoMessages {
 	 public static final String Out_of_boundary = "None of the player cross the mark";
 	 public static final String Updation = "Updated";
 	 public static final String Duplicate_CapNo = "Cap number is already exist in the profile list";
+	 public static final String Check_Data = "Given  input is not present in the table";
 	
 }

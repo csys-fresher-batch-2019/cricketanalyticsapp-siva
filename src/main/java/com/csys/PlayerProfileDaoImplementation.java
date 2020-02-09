@@ -8,8 +8,9 @@ import java.util.List;
 public  class PlayerProfileDaoImplementation implements PlayerProfileDao {
 
 			
-		public void addPlayer(String capNo, String name, String nation, String style,int debutYear) throws DBexception {
-        	try(Connection con1 = TestConnection1.getConnection();
+		public boolean addPlayer(String capNo, String name, String nation, String style,int debutYear) throws DBexception {
+        	boolean check = false;
+			try(Connection con1 = TestConnection1.getConnection();
 			Statement stmt = con1.createStatement();){
 			try(ResultSet rs = stmt.executeQuery("select cap_no from player_list where cap_no='"+capNo+"'");){
 			if(rs.next()) {
@@ -19,14 +20,16 @@ public  class PlayerProfileDaoImplementation implements PlayerProfileDao {
 				String add = "insert into player_list(cap_no,player_name,nation,batting_style,debut_year) values ('"+capNo+"','"+name+"','"+nation+"','"+style+"',"+debutYear+")";
 				System.out.println(add);
 				int rows =stmt.executeUpdate(add);
-			System.out.println(rows);
+			    System.out.println(rows);
+			    check = true;
 			}}
         	}catch(Exception e) {
         		throw new DBexception(errorMessages.NonSpecifyColumn);
         	}
+			return check;
 		}
 
-		public void updatePlayer(String capNo,int year) throws DBexception {
+		public void updateRetiredYear(String capNo,int year) throws DBexception {
 			 try(Connection con1 = TestConnection1.getConnection();
 			Statement st = con1.createStatement();){
 			try(ResultSet rs = st.executeQuery("select cap_no from player_list where cap_no='"+capNo+"'");){

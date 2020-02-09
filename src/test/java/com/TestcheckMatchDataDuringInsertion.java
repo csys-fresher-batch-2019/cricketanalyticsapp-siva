@@ -5,11 +5,10 @@ import java.util.Scanner;
 import com.csys.MatchDataDaoImp;
 import com.csys.infoMessages;
 
-public class TestUpdateCareer {
+public class TestcheckMatchDataDuringInsertion {
 
 	public static void main(String[] args) throws Exception {
-				
-		MatchDataDaoImp obj = new MatchDataDaoImp();
+		MatchDataDaoImp mdd = new MatchDataDaoImp();
 		Scanner sr = new Scanner(System.in);
 		System.out.println("Enter the cap number");
 		String capNo = sr.next();
@@ -17,16 +16,17 @@ public class TestUpdateCareer {
 		String format = sr.next();
 		System.out.println("Enter the runs Scored");
 		int runs = sr.nextInt();
-		String status = "yet to update";
-		boolean res = obj.checkMatchDataDuringInsertion(capNo, format, runs, status);
+		String status = "yet to update"; 
+		boolean res = mdd.checkMatchDataDuringInsertion(capNo, format, runs, status);
 		System.out.println(res);
 		
 		if (res) {
-			obj.updateCareer(capNo, format, runs);
+			mdd.updateCareer(capNo, format, runs);
 			System.out.println(infoMessages.Updation);
 			
-			}
-	                                        
+		}
+		
+
 	}
 
 }

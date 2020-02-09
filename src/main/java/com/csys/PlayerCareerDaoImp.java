@@ -1,6 +1,7 @@
 package com.csys;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -10,29 +11,26 @@ import com.formatruns;
 
 public class PlayerCareerDaoImp implements PlayerCareerDao {
 
-	public void newCareerDetails(String capNo, String format, int matches, int runs, int fifty, int hundred, int best)
-			throws DBexception {
+	public void createNewCareer(String capNo)throws DBexception {
 		try(Connection con1 = TestConnection1.getConnection();
 		Statement stmt = con1.createStatement();){
 		try(ResultSet res =stmt.executeQuery("select cap_no from player_list where cap_no='" + capNo + "'");){
 		if(res.next()) {
-			try(ResultSet rs =stmt.executeQuery("select cap_no,match_id from player_career where cap_no='" + capNo+"' and match_id='" + format + "'");){
-			if (rs.next()) {
-				String sqladd = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"
-						+ capNo + "','" + format + "','" + matches + "','" + runs + "','" + fifty + "','" + hundred
-						+ "','" + best + "')";
-				System.out.println(sqladd);
-				int rows = stmt.executeUpdate(sqladd);
+			System.out.println(infoMessages.Duplicate_CapNo);
+		}
+		else {
+			String sqladd1 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"+capNo+"','odi',0,0,0,0,0)";
+			String sqladd2 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"+capNo+"','odi',0,0,0,0,0)";			
+			String sqladd3 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"+capNo+"','odi',0,0,0,0,0)";	
+			System.out.println(sqladd1);
+				int rows = stmt.executeUpdate(sqladd1);
+				int rows1 = stmt.executeUpdate(sqladd2);
+				int rows2 = stmt.executeUpdate(sqladd3);
 				System.out.println(rows);
 				System.out.println(infoMessages.Insert_Message);}}}
-			} catch(Exception e) {
-				throw new DBexception(infoMessages.Duplicate_message);
-			}
-		} catch(Exception e) {
-			throw new DBexception (errorMessages.CreateCareer);
-		}
-	}
-
+			 catch(Exception e) {
+			 e.printStackTrace();
+		}}
 	
 
 	public ArrayList<PlayerCareer> getdetails(String name) throws DBexception {
@@ -199,9 +197,46 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
         	throw new DBexception(errorMessages.Invalid_Format_case);
         }
 	}
-}
 
-	/*public ArrayList<PlayerCareer> listallPlayersCareer(String format) throws Exception {
+
+	
+	public boolean checkinsertCareerDetailForSpecificFormat(String capNo, String format) throws Exception {
+		boolean valid =false;
+		String check ="select cap_no,match_id from player_career where cap_no=? and match_id=?";
+		try(Connection connect = TestConnection1.getConnection();
+		PreparedStatement pst = connect.prepareStatement(check);){
+			pst.setString(1,capNo);
+			pst.setString(2, format);
+			try(ResultSet rs = pst.executeQuery()){
+				if(rs.next()) {
+					valid = true;
+				}
+			}
+			
+		}
+		return valid;
+	}	
+
+	public void insertCareerDetailForSpecificFormat(String capNo, String format, int matches, int runs, int fifty,int hundred, int best,float average) throws Exception {
+     String insert = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values (?,?,?,?,?,?,?) ";
+     try(Connection connect = TestConnection1.getConnection();
+    	PreparedStatement pst = connect.prepareStatement(insert);){
+    	 pst.setString(1,capNo );
+    	 pst.setString(2,format );
+    	 pst.setInt(3, matches);
+    	 pst.setInt(4, runs);
+    	 pst.setInt(5, fifty);
+    	 pst.setInt(6, hundred);
+    	 pst.setInt(7, best);
+    	 pst.setFloat(8, average);
+    	 pst.executeUpdate();
+    	 System.out.println(infoMessages.Insert_Message);
+     }catch(Exception e) {
+    	 e.printStackTrace();
+     }
+	
+}
+}	/*public ArrayList<PlayerCareer> listallPlayersCareer(String format) throws Exception {
 		// TODO Auto-generated method stub
 		Connection con1 = TestConnection1.getConnection();
 		Statement stmt = con1.createStatement();

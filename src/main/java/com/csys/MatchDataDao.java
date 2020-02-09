@@ -8,4 +8,6 @@ public interface MatchDataDao {
 	
 	void updateCareer(String capNo,String format,int runs) throws Exception;
 	
+	boolean checkMatchDataDuringInsertion(String capNo,String format,int runs,String status) throws Exception;
+	
 }
