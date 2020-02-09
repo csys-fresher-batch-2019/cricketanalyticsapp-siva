@@ -1,4 +1,4 @@
-package com;
+/*package com;
 
 import com.csys.battingStyle;
 
@@ -10,4 +10,4 @@ public class TestEnum {
         System.out.println(bs);
 	}
 
-}
+}*/
