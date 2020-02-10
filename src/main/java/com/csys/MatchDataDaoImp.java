@@ -13,7 +13,7 @@ public class MatchDataDaoImp implements MatchDataDao {
 		try (Connection res = TestConnection1.getConnection();
 				PreparedStatement ps = res.prepareStatement(sql);){	
 			    ps.setString(1, capNo);
-			    ResultSet rs = ps.executeQuery();
+			    try(ResultSet rs = ps.executeQuery();){
 			    if(rs.next()) {		
 		String sqladd = "insert into match_data values (?,?,?,?)";
 		try(PreparedStatement arr = res.prepareStatement(sqladd);)
@@ -24,7 +24,7 @@ public class MatchDataDaoImp implements MatchDataDao {
 		arr.setString(4,status);
 		arr.executeUpdate();
 		System.out.println(infoMessages.Add_Match_Detail);
-		}}} 
+		}}} }
 		catch(Exception e) {
 			throw new DBexception(errorMessages.CreateProfile);
 		}

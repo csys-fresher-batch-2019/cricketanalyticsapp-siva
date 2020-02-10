@@ -218,7 +218,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 	}	
 
 	public void insertCareerDetailForSpecificFormat(String capNo, String format, int matches, int runs, int fifty,int hundred, int best,float average) throws Exception {
-     String insert = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values (?,?,?,?,?,?,?) ";
+     String insert = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score,average) values (?,?,?,?,?,?,?.?) ";
      try(Connection connect = TestConnection1.getConnection();
     	PreparedStatement pst = connect.prepareStatement(insert);){
     	 pst.setString(1,capNo );
