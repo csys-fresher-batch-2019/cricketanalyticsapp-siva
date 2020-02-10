@@ -3,6 +3,7 @@ package com;
 import java.util.Scanner;
 
 import com.csys.MatchDataDaoImp;
+import com.csys.infoMessages;
 
 public class TestAddMatchDetail {
 
@@ -17,5 +18,9 @@ public class TestAddMatchDetail {
 	     String format = sr.next();
 	     System.out.println("Enter the runs scored");
 	     int runs = sr.nextInt();
+	     String status = "yet to update";
+	     obj.addMatchDetail(capNo, format, runs, status);
+	     System.out.println(infoMessages.Insert_Message);
+	     sr.close();
 	}
 }

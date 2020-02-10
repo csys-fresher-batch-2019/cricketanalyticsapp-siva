@@ -15,7 +15,7 @@ public class TestInsertCareerDetailForSpecificFormat {
 		String capNo = sc.next();
 		System.out.println("Enter the format");
 		String format = sc.next();
-		use.checkinsertCareerDetailForSpecificFormat(capNo, format);
+		valid = use.checkinsertCareerDetailForSpecificFormat(capNo, format);
 		if(valid) {
 			
 			System.out.println(infoMessages.Duplicate_message);

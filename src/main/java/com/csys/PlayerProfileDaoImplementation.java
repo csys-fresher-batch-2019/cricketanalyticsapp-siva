@@ -38,7 +38,11 @@ public  class PlayerProfileDaoImplementation implements PlayerProfileDao {
 			System.out.println(sql);
 			st.executeUpdate(sql);
 			System.out.println(infoMessages.Updation);
-			}}}
+			}
+			else {
+				System.out.println(errorMessages.Invalid_capNo);
+			}
+			}}
 			catch(Exception e) {
 				throw new DBexception(errorMessages.Invalid_capNo);
 			}

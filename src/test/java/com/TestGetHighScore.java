@@ -3,7 +3,8 @@ package com;
 import java.util.List;
 import java.util.Scanner;
 import com.csys.PlayerCareer;
-import com.csys.PlayerCareerDaoImp; 
+import com.csys.PlayerCareerDaoImp;
+import com.csys.errorMessages; 
 
 public class TestGetHighScore {
 
@@ -16,9 +17,15 @@ public class TestGetHighScore {
 		PlayerCareerDaoImp wen = new PlayerCareerDaoImp();
 		System.out.println("Enter the value of case");
 		int r = sc.nextInt();
-		System.out.println("Enter the format");
-		String format = sc.next();
+		
+		if(r>4) {
+			System.out.println(errorMessages.Invalid_Format_case);
+		}
+		else {
+			System.out.println("Enter the format");
+			String format = sc.next();
 		List <PlayerCareer> hs = wen.best(format,r);
+		if(hs.size()!=0) {
 		for (PlayerCareer best : hs) {
 			System.out.print(best.getplayerName()+"\t");
 			if (r==1) {
@@ -35,5 +42,8 @@ public class TestGetHighScore {
 			}
 		}
 	}
-
-}
+	else {
+		System.out.println(errorMessages.Invalid_Format_case);
+	}
+		}
+}}

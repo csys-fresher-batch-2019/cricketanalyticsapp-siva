@@ -17,10 +17,20 @@ public class TestGetDetails {
 		ArrayList<PlayerCareer> task1 = new ArrayList<PlayerCareer>();
 		task1 = (p.getdetails(name));
        for (PlayerCareer res : task1) {
-    	   System.out.println(res);
+    	   System.out.println(res.getCapNo());
+    	   System.out.println(res.getFormat());
+    	   System.out.println(res.getMatches());
+    	   System.out.println(res.getRuns());
+    	   System.out.println(res.getFifty());
+    	   System.out.println(res.getHundred());
+    	   System.out.println(res.getBest());
+    	   System.out.println(res.getAverage());
+    	   System.out.println(res.getRanks());
+    	   System.out.println("/n");
 	}
+       
 		
-		
+		sc.close();
 
 	}
 

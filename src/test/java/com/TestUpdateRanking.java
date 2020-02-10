@@ -14,6 +14,7 @@ public class TestUpdateRanking {
 		Scanner sc = new Scanner(System.in);
 		String format = sc.next();
 		ns.updaterank(format);
+		sc.close();
 }
 
 }

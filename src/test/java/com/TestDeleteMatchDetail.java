@@ -12,6 +12,7 @@ public class TestDeleteMatchDetail {
 		final String word = "updated";
 		MatchDataDaoImp obj = new MatchDataDaoImp();
 		obj.deleteMatchDetail(word);
+		sc.close();
 	}
 
 }

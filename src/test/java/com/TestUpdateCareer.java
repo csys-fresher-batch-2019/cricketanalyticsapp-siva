@@ -19,7 +19,7 @@ public class TestUpdateCareer {
 		int runs = sr.nextInt();
 		String status = "yet to update";
 		boolean res = obj.checkMatchDataDuringInsertion(capNo, format, runs, status);
-		System.out.println(res);
+		//System.out.println(res);
 		
 		if (res) {
 			obj.updateCareer(capNo, format, runs);

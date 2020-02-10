@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.formatruns;
+import com.csys.formatruns;
 
 public class PlayerCareerDaoImp implements PlayerCareerDao {
 
@@ -39,12 +39,12 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 		ArrayList<PlayerCareer> task = new ArrayList<>();
 		// String det = "select * from player_career where cap_no = '"+capNo+"'";
 		try(ResultSet res = stmt.executeQuery("select player_name from player_list where upper(player_name)=upper('" + name + "')");){
-		if (res.next()) {
+		if (res.next()==true) {
 			String det = "select * from player_career where cap_no =(select cap_no from player_list where upper(player_name) =upper('"
 					+ name + "'))";
 			System.out.println(det);
 			System.out.println(name.toUpperCase());
-
+		 
 			try(ResultSet rs = stmt.executeQuery(det);){
 
 			while (rs.next()) {
@@ -59,7 +59,10 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 				pc.average=rs.getFloat("average");
 				pc.ranks = rs.getInt("ranks");
 				task.add(pc);
-			}}}}return task;
+			}}}else {
+				System.out.println(errorMessages.Invalid_Name);
+			}
+		}return task;
 		} catch(Exception e) {
 			throw new DBexception (errorMessages.Invalid_Name);
 		}
@@ -71,7 +74,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 		Statement stmt = con.createStatement();){
 		if (r == 1) {
 			String sql = "select l.player_name,c.high_score from player_list l,player_career c where c.match_id='"
-					+ format + "' and l.cap_no = c.cap_no order by high_score DESC";
+					+ format + "' and l.cap_no = c.cap_no and high_score>100 order by high_score DESC";
 			try(ResultSet res = stmt.executeQuery(sql);){
 			List<PlayerCareer> bst = new ArrayList<>();
 			while (res.next()) {
@@ -85,7 +88,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 			
 		} else if (r == 2) {
 			String sql1 = "select l.player_name,c.hundred from player_list l,player_career c where c.match_id='"
-					+ format + "' and l.cap_no = c.cap_no order by hundred DESC";
+					+ format + "' and l.cap_no = c.cap_no and hundred>0 order by hundred DESC";
 			try(ResultSet re = stmt.executeQuery(sql1);){
 			List<PlayerCareer> bst = new ArrayList<>();
 			while (re.next()) {
@@ -97,7 +100,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 			return bst;
 		} }else if (r == 3) {
 			String sql2 = "select l.player_name,c.fifty from player_list l,player_career c where c.match_id='" + format
-					+ "' and l.cap_no = c.cap_no order by fifty DESC";
+					+ "' and l.cap_no = c.cap_no and fifty>0 order by fifty DESC";
 			try(ResultSet rs = stmt.executeQuery(sql2);){
 			List<PlayerCareer> bst = new ArrayList<PlayerCareer>();
 			while (rs.next()) {
@@ -109,7 +112,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 			return bst;
 		} }else if (r == 4) {
 			String sql3 = "select l.player_name,c.runs from player_list l,player_career c where c.match_id='" + format
-					+ "' and l.cap_no = c.cap_no order by runs DESC";
+					+ "' and l.cap_no = c.cap_no and runs>1000 order by runs DESC";
 			try(ResultSet rl = stmt.executeQuery(sql3);){
 			List<PlayerCareer> bst = new ArrayList<>();
 			while (rl.next()) {
@@ -218,7 +221,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 	}	
 
 	public void insertCareerDetailForSpecificFormat(String capNo, String format, int matches, int runs, int fifty,int hundred, int best,float average) throws Exception {
-     String insert = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score,average) values (?,?,?,?,?,?,?.?) ";
+     String insert = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score,average) values (?,?,?,?,?,?,?,?) ";
      try(Connection connect = TestConnection1.getConnection();
     	PreparedStatement pst = connect.prepareStatement(insert);){
     	 pst.setString(1,capNo );
@@ -236,36 +239,4 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
      }
 	
 }
-}	/*public ArrayList<PlayerCareer> listallPlayersCareer(String format) throws Exception {
-		// TODO Auto-generated method stub
-		Connection con1 = TestConnection1.getConnection();
-		Statement stmt = con1.createStatement();
-		String sql = "select * from player_career where match_id ='"+format+"'" ;
-		System.out.println(sql);
-		ResultSet rs = stmt.executeQuery(sql);
-		ArrayList<PlayerCareer> pl = new ArrayList<PlayerCareer>();
-		while(rs.next()) {
-			PlayerCareer pc =new PlayerCareer();
-			pc.capNo = rs.getString("cap_no");
-			pc.format  = rs.getString("match_id");
-			pc.matches =rs.getInt("matches");
-			pc.runs =rs.getInt("runs");
-			pc.fifty = rs.getInt("fifty");
-			pc.hundred = rs.getInt("hundred");
-			pc.best = rs.getInt("high_score");
-			pc.average = rs.getFloat("average");
-			pc.ranks = rs.getInt("ranks");
-            pl.add(pc);
-			}
-		return pl;
-	}
-	}*/
-	
-
-// task.add(obj);
-// System.out.println(rs.getString("cap_no")+" "+rs.getString("match_id")+"
-// "+rs.getInt("matches")+" "+rs.getInt("runs")+" "+rs.getInt("fifty")+"
-// "+rs.getInt("hundred")+" "+rs.getInt("high_score"));
-// for (PlayerCareer playerCareer : task) {
-// System.out.println("\n"+playerCareer);
-// }
+}	
