@@ -16,6 +16,7 @@ public class TestDisplayTop5Batsman {
         String format = sc.next();
         System.out.println("Enter number of players you need to list");
         int a =sc.nextInt();
+        sc.close();
 		PlayerCareerDaoImp vs =new PlayerCareerDaoImp();
 		List<PlayerCareer> bs = vs.displaytopbatsman(format,a);
 		for (PlayerCareer pc : bs) {
