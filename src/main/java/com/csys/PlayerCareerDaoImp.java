@@ -14,14 +14,14 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 	public void createNewCareer(String capNo)throws DBexception {
 		try(Connection con1 = TestConnection1.getConnection();
 		Statement stmt = con1.createStatement();){
-		try(ResultSet res =stmt.executeQuery("select cap_no from player_list where cap_no='" + capNo + "'");){
+		try(ResultSet res =stmt.executeQuery("select cap_no from player_career where cap_no='" + capNo + "'");){
 		if(res.next()) {
 			System.out.println(infoMessages.Duplicate_CapNo);
 		}
 		else {
 			String sqladd1 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"+capNo+"','odi',0,0,0,0,0)";
-			String sqladd2 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"+capNo+"','odi',0,0,0,0,0)";			
-			String sqladd3 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"+capNo+"','odi',0,0,0,0,0)";	
+			String sqladd2 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"+capNo+"','test',0,0,0,0,0)";			
+			String sqladd3 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"+capNo+"','t20',0,0,0,0,0)";	
 			System.out.println(sqladd1);
 				int rows = stmt.executeUpdate(sqladd1);
 				int rows1 = stmt.executeUpdate(sqladd2);

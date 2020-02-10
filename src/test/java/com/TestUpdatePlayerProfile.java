@@ -14,7 +14,7 @@ public class TestUpdatePlayerProfile {
 		String capNo = sc.next();
 		System.out.println("Enter the Retired Year");
 		int year = sc.nextInt();
-		obj.updatePlayer(capNo,year);
+		obj.updateRetiredYear(capNo,year);
 	}
 
 }

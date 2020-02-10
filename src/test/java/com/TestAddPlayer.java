@@ -25,9 +25,10 @@ public class TestAddPlayer {
 		String style= sc.nextLine(); 
 		System.out.println("Enter Debut Year");
 		int debutYear= sc.nextInt();
-		add1.addPlayer(capNo,name,nation,style,debutYear);
-		System.out.println(infoMessages.Insert_Message);
+		res = add1.addPlayer(capNo,name,nation,style,debutYear);
+		
 		if(res) {
+			System.out.println(infoMessages.Insert_Message);
 			PlayerCareerDaoImp obj = new PlayerCareerDaoImp();
 			obj.createNewCareer(capNo);
 		}
