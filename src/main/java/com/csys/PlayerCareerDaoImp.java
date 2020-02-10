@@ -157,7 +157,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 		try(Connection con = TestConnection1.getConnection();
 		Statement stmt = con.createStatement();){
 		String sql = "select l.cap_no,l.player_name,l.nation,c.average from player_list l,player_career c where c.match_id='"
-				+ format + "'and l.cap_no = c.cap_no order by c.average DESC";
+				+ format + "'and l.cap_no = c.cap_no and l.retired_year=0 order by c.average DESC";
 		System.out.println(sql);
 		try(ResultSet res = stmt.executeQuery(sql);){
 		int rank = 1;
