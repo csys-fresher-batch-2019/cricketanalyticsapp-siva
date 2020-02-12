@@ -15,7 +15,13 @@ public interface PlayerCareerDao {
 	
 	ArrayList<PlayerCareer> getdetails (String capNo) throws Exception;
 	
-	List<PlayerCareer> best  (String format,int r) throws Exception;
+	List<PlayerCareer> listhighScore  (String format) throws Exception;
+	
+	List<PlayerCareer> listfifties  (String format) throws Exception;
+	
+	List<PlayerCareer> listhundred  (String format) throws Exception;
+	
+	List<PlayerCareer> listruns  (String format) throws Exception;
 	
 	List<formatruns> searchbyformatruns (String format,int runs) throws Exception;
 	

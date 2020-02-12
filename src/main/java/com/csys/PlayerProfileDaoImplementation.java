@@ -51,7 +51,7 @@ public  class PlayerProfileDaoImplementation implements PlayerProfileDao {
 		public List<PlayerProfile> playerlist(String nation) throws DBexception {
 			try(Connection con1 = TestConnection1.getConnection();
 			Statement stmt = con1.createStatement();){
-			String sql = "select * from player_list where nation ='"+nation+"' ";
+			String sql = "select cap_no,player_name,batting_style,debut_year from player_list where nation ='"+nation+"' and retired_year = 0";
 			System.out.println(sql);
 			try(ResultSet rs = stmt.executeQuery(sql);){
 			List<PlayerProfile> pl = new ArrayList<PlayerProfile>();
@@ -59,7 +59,6 @@ public  class PlayerProfileDaoImplementation implements PlayerProfileDao {
 				PlayerProfile pp =new PlayerProfile();
 				pp.capNo = rs.getString("cap_no");
 				pp.name  = rs.getString("player_name");
-				pp.nation =rs.getString("nation");
 				pp.style =rs.getString("batting_style");
 				pp.debutYear = rs.getInt("debut_year");
 				//pp.retiredYear = rs.getInt("retired_year");
