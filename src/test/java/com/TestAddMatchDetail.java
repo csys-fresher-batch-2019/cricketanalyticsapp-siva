@@ -18,8 +18,8 @@ public class TestAddMatchDetail {
 	     String format = sr.next();
 	     System.out.println("Enter the runs scored");
 	     int runs = sr.nextInt();
-	     String status = "yet to update";
-	     obj.addMatchDetail(capNo, format, runs, status);
+	     //String status = "yet to update";
+	     obj.addMatchDetail(capNo, format, runs);
 	     System.out.println(infoMessages.Insert_Message);
 	     sr.close();
 	}

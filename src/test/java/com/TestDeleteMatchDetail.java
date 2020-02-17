@@ -9,9 +9,9 @@ public class TestDeleteMatchDetail {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
-		final String word = "updated";
+		//final String word = "updated";
 		MatchDataDaoImp obj = new MatchDataDaoImp();
-		obj.deleteMatchDetail(word);
+		obj.deleteMatchDetail();
 		sc.close();
 	}
 

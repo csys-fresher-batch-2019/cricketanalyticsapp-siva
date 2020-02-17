@@ -1,5 +1,6 @@
 package com.csys;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,8 @@ public interface PlayerCareerDao {
 	void updaterank (String format) throws Exception;
 	
 	List<PlayerCareer> displaytopbatsman(String format ,int n) throws Exception ;
+	
+	boolean validateplayercareer(String capNo,String format) throws  Exception ;
 	
 	
 }

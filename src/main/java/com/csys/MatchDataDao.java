@@ -2,11 +2,11 @@ package com.csys;
 
 public interface MatchDataDao {
 	
-	void addMatchDetail(String capNo,String format,int runs,String status) throws Exception;
+	void addMatchDetail(String capNo,String format,int runs)throws Exception;
 	
-	void deleteMatchDetail(String status) throws Exception;
+	void deleteMatchDetail() throws Exception;
 	
-	void updateCareer(String capNo,String format,int runs) throws Exception;
+	void updateCareer() throws Exception;
 	
 	boolean checkMatchDataDuringInsertion(String capNo,String format,int runs,String status) throws Exception;
 	

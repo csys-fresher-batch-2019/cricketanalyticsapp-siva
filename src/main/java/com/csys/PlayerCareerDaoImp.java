@@ -3,6 +3,7 @@ package com.csys;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +11,8 @@ import java.util.List;
 public class PlayerCareerDaoImp implements PlayerCareerDao {
 
 	public void createNewCareer(String capNo) throws DBexception {
-		try (Connection con1 = TestConnection1.getConnection(); Statement stmt = con1.createStatement();) {
-			try (ResultSet res = stmt.executeQuery("select cap_no from player_career where cap_no='" + capNo + "'");) {
-				if (res.next()) {
-					System.out.println(infoMessages.Duplicate_CapNo);
-				} else {
+							try (Connection con1 = TestConnection1.getConnection(); 
+							Statement stmt = con1.createStatement();) {
 					String sqladd1 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"
 							+ capNo + "','odi',0,0,0,0,0)";
 					String sqladd2 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"
@@ -26,13 +24,15 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 					int rows1 = stmt.executeUpdate(sqladd2);
 					int rows2 = stmt.executeUpdate(sqladd3);
 					System.out.println(rows);
+					System.out.println(rows1);
+					System.out.println(rows2);
 					System.out.println(infoMessages.Insert_Message);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+					
+				} catch (Exception e) {
+			      e.printStackTrace();
 		}
-	}
+				}
+	
 
 	public ArrayList<PlayerCareer> getdetails(String name) throws DBexception {
 		try (Connection con1 = TestConnection1.getConnection(); Statement stmt = con1.createStatement();) {
@@ -180,12 +180,12 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 	}
 
 	public void updaterank(String format) throws Exception {
-		Connection con = TestConnection1.getConnection();
-		Statement stmt = con.createStatement();
+		try(Connection con = TestConnection1.getConnection();
+		Statement stmt = con.createStatement();){
 		String sql = "select c.cap_no, l.player_name,l.nation,c.average from player_list l,player_career c where c.match_id='"
 				+ format + "'and l.cap_no=c.cap_no and l.retired_year= 0 and c.average>0 order by c.average DESC";
 		System.out.println(sql);
-		ResultSet res = stmt.executeQuery(sql);
+		try(ResultSet res = stmt.executeQuery(sql);){
 		int rank = 1;
 		while (res.next()) {
 			// System.out.println(sql);
@@ -195,16 +195,18 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 			String sql1 = "update player_career set ranks=" + rank + " where cap_no ='" + ad.getCapNo()
 					+ "' and match_id='" + format + "'";
 
-			Statement stm = con.createStatement();
-			{
+			try(Statement stm = con.createStatement();){
+			
 				int row = stm.executeUpdate(sql1);
 				System.out.println(row);
 				System.out.println(sql1);
 				rank++;
-			}
-		}
+			
+		}}
 		System.out.println(infoMessages.Updation);
-	}
+	}}catch(Exception e) {
+		throw new DBexception (errorMessages.Invalid_Format);
+	}}
 
 	public List<PlayerCareer> displaytopbatsman(String format, int n) throws Exception {
 		try (Connection con = TestConnection1.getConnection(); Statement stmt = con.createStatement();) {
@@ -262,6 +264,17 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
+	
+	
+	public boolean validateplayercareer(String capNo,String format) throws Exception{
+		boolean check = true;		
+		try (Connection con1 = TestConnection1.getConnection(); 
+				Statement stmt = con1.createStatement();) {
+			try (ResultSet res = stmt.executeQuery("select cap_no,match_id from player_career where cap_no='" + capNo + "' and match_id ='"+format+"'");) {
+				if (res.next()) {
+					check = false;
+	}}con1.close();}
+				return check;
 }
+	}

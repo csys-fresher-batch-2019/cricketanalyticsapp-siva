@@ -11,4 +11,5 @@ public class errorMessages {
     public static final String Invalid_capNo = "Invalid Cap Number";
     public static final String Invalid_nation="Nation not found";
     public static final String Connection = "Connection Timed out";
+    public static final String match_data_res = "No data found";
 }

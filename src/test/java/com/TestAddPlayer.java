@@ -11,7 +11,7 @@ import com.csys.infoMessages;
 public class TestAddPlayer {
 
 	public static void main(String[] args) throws Exception {
-		boolean res = false;
+		
 		PlayerProfileDaoImplementation add1 = new PlayerProfileDaoImplementation();
 		
 		Scanner sc = new Scanner(System.in);
@@ -25,9 +25,9 @@ public class TestAddPlayer {
 		String style= sc.nextLine(); 
 		System.out.println("Enter Debut Year");
 		int debutYear= sc.nextInt();
-		res = add1.addPlayer(capNo,name,nation,style,debutYear);
-		
-		if(res) {
+		 add1.addPlayer(capNo,name,nation,style,debutYear);
+	}}	
+		/*if(res) {
 			System.out.println(infoMessages.Insert_Message);
 			PlayerCareerDaoImp obj = new PlayerCareerDaoImp();
 			obj.createNewCareer(capNo);
@@ -37,7 +37,7 @@ public class TestAddPlayer {
 		}
 	}
 	
-}
+}*/
 
 
 

@@ -21,7 +21,7 @@ public class TestcheckMatchDataDuringInsertion {
 		System.out.println(res);
 		
 		if (res) {
-			mdd.updateCareer(capNo, format, runs);
+			mdd.updateCareer();
 			System.out.println(infoMessages.Updation);
 			
 		}

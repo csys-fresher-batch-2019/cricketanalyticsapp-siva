@@ -10,7 +10,7 @@ public class TestUpdateCareer {
 	public static void main(String[] args) throws Exception {
 				
 		MatchDataDaoImp obj = new MatchDataDaoImp();
-		Scanner sr = new Scanner(System.in);
+		/*Scanner sr = new Scanner(System.in);
 		System.out.println("Enter the cap number");
 		String capNo = sr.next();
 		System.out.println("Enter the format");
@@ -19,13 +19,13 @@ public class TestUpdateCareer {
 		int runs = sr.nextInt();
 		String status = "yet to update";
 		boolean res = obj.checkMatchDataDuringInsertion(capNo, format, runs, status);
-		//System.out.println(res);
+		//System.out.println(res);*/
 		
-		if (res) {
-			obj.updateCareer(capNo, format, runs);
+		//if (res) {
+			obj.updateCareer();
 			System.out.println(infoMessages.Updation);
 			
-			}
+			//}
 	                                        
 	}
 

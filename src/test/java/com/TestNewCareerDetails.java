@@ -13,8 +13,8 @@ public class TestNewCareerDetails {
 		Scanner sc = new Scanner(System.in);
 		String capNo = sc.nextLine();
 		obj.createNewCareer(capNo);
-		  // obj.newCareerDetails("i100", "odi", 1, 80, 1, 0, 80);
-		   //obj.newCareerDetails("e227", "test", 1, 110, 0, 1, 110);
+		  
+		   
 		   
 	}
 
