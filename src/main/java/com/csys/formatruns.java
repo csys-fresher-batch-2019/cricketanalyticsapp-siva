@@ -2,14 +2,12 @@ package com.csys;
 
 public class formatruns {
 
-	 String playerName;
+	 private String playerName;
 	
-	 int runs;
+	private int runs;
 	
 	
-	/**
-	 * @return the playerName
-	 */
+	
 	public String getPlayerName() {
 		return playerName;
 	}

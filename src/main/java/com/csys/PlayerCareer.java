@@ -1,17 +1,19 @@
 package com.csys;
 
 public class PlayerCareer {
-	 String capNo;
-	 String playerName;
-	 String nation;
-	 String format;
-	int matches;
-	int runs;
-	int fifty;
-	int hundred;
-	int best;
-	float average;
-	int ranks;
+	private String capNo;
+	private String playerName;
+	private String nation;
+	private String format;
+	private int matches;
+	private int runs;
+	private int fifty;
+	private int hundred;
+	private int best;
+	private float average;
+	private int ranks;
+	
+	
 	public String getCapNo() {
 		return capNo;
 	}
@@ -27,7 +29,7 @@ public class PlayerCareer {
 	public String getnation() {
 		return nation;
 	}
-	public void nation(String nation) {
+	public void setnation(String nation) {
 		this.nation = nation;
 	}
 	

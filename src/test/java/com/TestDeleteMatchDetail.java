@@ -2,17 +2,19 @@ package com;
 
 import java.util.Scanner;
 
+import com.csys.Logger;
 import com.csys.MatchDataDaoImp;
+import com.csys.infoMessages;
 
 public class TestDeleteMatchDetail {
 
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
-		//final String word = "updated";
+	
+		Logger logger = new Logger();
 		MatchDataDaoImp obj = new MatchDataDaoImp();
 		obj.deleteMatchDetail();
-		sc.close();
+		logger.info(infoMessages.Delete_Match_Detail);
+		
 	}
 
 }

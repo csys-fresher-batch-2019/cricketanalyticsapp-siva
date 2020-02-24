@@ -1,5 +1,6 @@
 package com;
 
+import com.csys.Logger;
 import com.csys.PlayerCareerDaoImp;
 import com.csys.infoMessages;
 
@@ -8,33 +9,35 @@ import java.util.Scanner;
 public class TestInsertCareerDetailForSpecificFormat {
 
 	public static void main(String[] args) throws Exception {
+		Logger logger = new Logger();
 		boolean valid = false ;
 		PlayerCareerDaoImp use = new PlayerCareerDaoImp();
 		Scanner sc = new Scanner (System.in);
-		System.out.println("Enter the cap number");
+		logger.info("Enter the cap number");
 		String capNo = sc.next();
-		System.out.println("Enter the format");
+		logger.info("Enter the format");
 		String format = sc.next();
 		valid = use.checkinsertCareerDetailForSpecificFormat(capNo, format);
 		if(valid) {
 			
-			System.out.println(infoMessages.Duplicate_message);
+			logger.info(infoMessages.Duplicate_message);
 		}
 		else {
-			System.out.println("Enter matches");
+			logger.info("Enter matches");
 			int matches = sc.nextInt();
-			System.out.println("Enter Runs");
+			logger.info("Enter Runs");
 			int runs = sc.nextInt();
-			System.out.println("Enter Fifties");
+			logger.info("Enter Fifties");
 			int fifty = sc.nextInt();
-			System.out.println("Enter Hundred");
+			logger.info("Enter Hundred");
 			int hundred = sc.nextInt();
-			System.out.println("Enter High Score");
+			logger.info("Enter High Score");
 			int best = sc.nextInt();
-			System.out.println("Enter Average");
+			logger.info("Enter Average");
 			float average = sc.nextFloat();
+			sc.close();
 			use.insertCareerDetailForSpecificFormat(capNo, format, matches, runs, fifty, hundred, best, average);
-		    System.out.println(infoMessages.Insert_Message); 
+		    logger.info(infoMessages.Insert_Message); 
 		}
 
 	}

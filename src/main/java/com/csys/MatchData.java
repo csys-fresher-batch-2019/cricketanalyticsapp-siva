@@ -2,10 +2,10 @@ package com.csys;
 
 public class MatchData {
 	
-	String capNo ;
-	String format ;
-	Integer runs ;
-	String status ;
+	private String capNo ;
+	private String format ;
+	private Integer runs ;
+	private String status ;
 	
 	public String getCapNo() {
 		return capNo;

@@ -10,4 +10,5 @@ public interface MatchDataDao {
 	
 	boolean checkMatchDataDuringInsertion(String capNo,String format,int runs,String status) throws Exception;
 	
+	
 }
