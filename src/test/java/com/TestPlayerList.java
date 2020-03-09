@@ -3,9 +3,9 @@ package com;
 import java.util.List;
 import java.util.Scanner;
 
-import com.csys.Logger;
-import com.csys.PlayerProfile;
-import com.csys.PlayerProfileDaoImplementation;
+import com.csys.dao.imp.PlayerProfileDaoImplementation;
+import com.csys.model.PlayerProfile;
+import com.csys.util.Logger;
 
 public class TestPlayerList {
 

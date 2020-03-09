@@ -2,9 +2,9 @@ package com;
 
 import java.util.Scanner;
 
-import com.csys.Logger;
-import com.csys.MatchDataDaoImp;
-import com.csys.infoMessages;
+import com.csys.dao.imp.MatchDataDaoImp;
+import com.csys.exceptionmsg.infoMessages;
+import com.csys.util.Logger;
 
 public class TestcheckMatchDataDuringInsertion {
 

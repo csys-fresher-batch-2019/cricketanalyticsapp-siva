@@ -4,8 +4,8 @@ package com;
 
 import java.util.Scanner;
 
-import com.csys.Logger;
-import com.csys.PlayerProfileDaoImplementation;
+import com.csys.dao.imp.PlayerProfileDaoImplementation;
+import com.csys.util.Logger;
 
 public class TestAddPlayer {
 

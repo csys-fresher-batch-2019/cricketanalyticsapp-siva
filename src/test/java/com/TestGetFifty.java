@@ -3,9 +3,9 @@ package com;
 import java.util.List;
 import java.util.Scanner;
 
-import com.csys.Logger;
-import com.csys.PlayerCareer;
-import com.csys.PlayerCareerDaoImp;
+import com.csys.dao.imp.PlayerCareerDaoImp;
+import com.csys.model.PlayerCareer;
+import com.csys.util.Logger;
 
 public class TestGetFifty {
 

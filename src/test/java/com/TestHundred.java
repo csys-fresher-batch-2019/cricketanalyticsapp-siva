@@ -3,9 +3,9 @@ package com;
 import java.util.List;
 import java.util.Scanner;
 
-import com.csys.Logger;
-import com.csys.PlayerCareer;
-import com.csys.PlayerCareerDaoImp;
+import com.csys.dao.imp.PlayerCareerDaoImp;
+import com.csys.model.PlayerCareer;
+import com.csys.util.Logger;
 
 public class TestHundred {
 
@@ -20,7 +20,7 @@ public class TestHundred {
 			PlayerCareerDaoImp wen = new PlayerCareerDaoImp();
 			
 	        List<PlayerCareer> get = wen.listhundred(Format);
-	        
+	     
 	        for (PlayerCareer playerCareer : get) {
 	        	String name = playerCareer.getplayerName();
 	        	int hundred =playerCareer.getHundred();

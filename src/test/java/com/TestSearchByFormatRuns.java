@@ -4,9 +4,9 @@ import java.util.List;
 
 import java.util.Scanner;
 
-import com.csys.Logger;
-import com.csys.PlayerCareerDaoImp;
-import com.csys.formatruns;
+import com.csys.dao.imp.PlayerCareerDaoImp;
+import com.csys.model.formatruns;
+import com.csys.util.Logger;
 
 public class TestSearchByFormatRuns {
 

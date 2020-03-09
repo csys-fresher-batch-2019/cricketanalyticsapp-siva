@@ -3,8 +3,8 @@ package com;
 import java.util.List;
 import java.util.Scanner;
 
-import com.csys.PlayerCareer;
-import com.csys.PlayerCareerDaoImp;
+import com.csys.dao.imp.PlayerCareerDaoImp;
+import com.csys.model.PlayerCareer;
 
 public class TestDisplayTop5Batsman {
 

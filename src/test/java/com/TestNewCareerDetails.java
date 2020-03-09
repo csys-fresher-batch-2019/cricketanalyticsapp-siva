@@ -2,7 +2,7 @@ package com;
 
 import java.util.Scanner;
 
-import com.csys.PlayerCareerDaoImp;
+import com.csys.dao.imp.PlayerCareerDaoImp;
 
 public class TestNewCareerDetails {
 

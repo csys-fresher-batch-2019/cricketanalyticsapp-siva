@@ -2,8 +2,8 @@ package com;
 
 import java.util.Scanner;
 
-import com.csys.Logger;
-import com.csys.PlayerCareerDaoImp;
+import com.csys.dao.imp.PlayerCareerDaoImp;
+import com.csys.util.Logger;
 
 public class TestUpdateRanking {
 
