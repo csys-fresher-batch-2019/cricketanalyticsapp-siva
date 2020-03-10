@@ -12,7 +12,7 @@ public class PlayerProfileDaoImplementationTest {
 	public void testValidateretiredplayer() throws Exception {
 		String capNo = "a12";
 		boolean expected = true;
-		boolean actual = obj.validateretiredplayer(capNo);
+		boolean actual = obj.validateRetiredPlayer(capNo);
 		assertEquals(expected, actual);
 	}
 
@@ -20,7 +20,7 @@ public class PlayerProfileDaoImplementationTest {
 	public void testValidateplayerprofile() throws Exception {
 		String capNo = "i175";
 		boolean expected = false;
-		boolean actual = obj.validateplayerprofile(capNo);
+		boolean actual = obj.validatePlayerProfile(capNo);
 		assertEquals(expected, actual);
 	}
 }
