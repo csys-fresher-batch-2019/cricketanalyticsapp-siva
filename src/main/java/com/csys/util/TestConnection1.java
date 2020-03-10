@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.csys.exceptionmsg.DBexception;
+import com.csys.exception.DBexception;
 
 public class TestConnection1 {
 

@@ -3,7 +3,7 @@ package com;
 import java.util.Scanner;
 
 import com.csys.dao.imp.MatchDataDaoImp;
-import com.csys.exceptionmsg.infoMessages;
+import com.csys.exception.infoMessages;
 import com.csys.util.Logger;
 
 public class TestAddMatchDetail {

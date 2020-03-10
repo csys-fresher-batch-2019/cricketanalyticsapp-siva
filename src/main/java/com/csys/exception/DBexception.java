@@ -1,4 +1,4 @@
-package com.csys.exceptionmsg;
+package com.csys.exception;
 
 public class DBexception extends Exception {
 
