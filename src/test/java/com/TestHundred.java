@@ -19,7 +19,7 @@ public class TestHundred {
 			sc.close();
 			PlayerCareerDaoImp wen = new PlayerCareerDaoImp();
 			
-	        List<PlayerCareer> get = wen.listhundred(Format);
+	        List<PlayerCareer> get = wen.listHundred(Format);
 	     
 	        for (PlayerCareer playerCareer : get) {
 	        	String name = playerCareer.getplayerName();

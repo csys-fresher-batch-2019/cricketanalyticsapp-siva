@@ -14,6 +14,6 @@ public interface MatchDataDao {
 
 	void updateCareer() throws DBexception;
 
-	List<MatchData> showmatchdetails(String status) throws DBexception;
+	List<MatchData> showMatchDetails(String status) throws DBexception;
 
 }

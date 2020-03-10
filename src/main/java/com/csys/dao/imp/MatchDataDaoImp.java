@@ -67,7 +67,7 @@ public class MatchDataDaoImp implements MatchDataDao {
 				cs.setInt(3, runs);
 				cs.execute();
 				PlayerCareerDaoImp object = new PlayerCareerDaoImp();
-				object.updaterank(format);
+				object.updateRank(format);
 			}
 
 		} catch (SQLException e) {
@@ -79,7 +79,7 @@ public class MatchDataDaoImp implements MatchDataDao {
 
 	@Override
 	// view match summary
-	public List<MatchData> showmatchdetails(String status) throws DBexception {
+	public List<MatchData> showMatchDetails(String status) throws DBexception {
 		String sql = "select * from match_data where status=?";
 		List<MatchData> summary = new ArrayList<>();
 		try (Connection ci = TestConnection1.getConnection(); PreparedStatement arr = ci.prepareStatement(sql);) {

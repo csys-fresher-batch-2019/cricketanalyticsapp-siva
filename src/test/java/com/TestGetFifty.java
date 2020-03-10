@@ -19,7 +19,7 @@ public class TestGetFifty {
 		sc.close();
 		PlayerCareerDaoImp wen = new PlayerCareerDaoImp();
 		
-        List<PlayerCareer> get = wen.listfifties(Format);
+        List<PlayerCareer> get = wen.listFifties(Format);
         
         for (PlayerCareer playerCareer : get) {
         	String name = playerCareer.getplayerName();

@@ -91,7 +91,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 	}
 
 	// Get career details for given player
-	public ArrayList<PlayerCareer> getdetails(String name) throws DBexception {
+	public ArrayList<PlayerCareer> getDetails(String name) throws DBexception {
 		try (Connection con1 = TestConnection1.getConnection(); Statement stmt = con1.createStatement();) {
 			ArrayList<PlayerCareer> task = new ArrayList<>();
 
@@ -131,7 +131,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 	}
 
 	// List highScore along with playername for given format in a descending order
-	public List<PlayerCareer> listhighScore(String format) throws DBexception {
+	public List<PlayerCareer> listHighScore(String format) throws DBexception {
 		String sql = "select l.player_name,c.high_score from player_list l,player_career c where c.match_id=? and l.cap_no = c.cap_no and high_score>100 order by high_score DESC";
 
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
@@ -154,7 +154,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 
 	// List number of hundreds along with playername for given format in a
 	// descending order
-	public List<PlayerCareer> listhundred(String format) throws DBexception {
+	public List<PlayerCareer> listHundred(String format) throws DBexception {
 		String sql = "select l.player_name,c.hundred from player_list l,player_career c where c.match_id=? and l.cap_no = c.cap_no and hundred>0 order by hundred DESC";
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
 			stmt.setString(1, format);
@@ -177,7 +177,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 
 	// List number of fifties along with playername for given format in a descending
 	// order
-	public List<PlayerCareer> listfifties(String format) throws DBexception {
+	public List<PlayerCareer> listFifties(String format) throws DBexception {
 		String sql2 = "select l.player_name,c.fifty from player_list l,player_career c where c.match_id=? and l.cap_no = c.cap_no and fifty>0 order by fifty DESC";
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql2);) {
 			stmt.setString(1, format);
@@ -199,7 +199,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 
 	// List more of runs along with player name for given format in a descending
 	// order
-	public List<PlayerCareer> listruns(String format) throws DBexception {
+	public List<PlayerCareer> listRuns(String format) throws DBexception {
 		String sql3 = "select l.player_name,c.runs from player_list l,player_career c where c.match_id=? and l.cap_no = c.cap_no and runs>1000 order by runs DESC";
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql3);) {
 			stmt.setString(1, format);
@@ -220,7 +220,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 
 	}
 
-	public List<formatruns> searchbyformatruns(String format, int runs) throws DBexception {
+	public List<formatruns> searchByFormatRuns(String format, int runs) throws DBexception {
 		String sql = "select l.player_name,c.runs from player_list l,player_career c where c.match_id=? and c.runs>? and l.cap_no=c.cap_no order by runs DESC";
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
 			stmt.setString(1, format);
@@ -249,7 +249,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 	}
 
 	// Update rank
-	public void updaterank(String format) throws DBexception {
+	public void updateRank(String format) throws DBexception {
 		String sql = "select c.cap_no, l.player_name,l.nation,c.average from player_list l,player_career c where c.match_id=? and l.cap_no=c.cap_no and l.retired_year= 0 and c.average>0 order by c.average DESC";
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
 			stmt.setString(1, format);
@@ -282,7 +282,7 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 	}
 
 	// Display Top Batsman for given format
-	public List<PlayerCareer> displaytopbatsman(String format, int n) throws DBexception {
+	public List<PlayerCareer> displayTopBatsman(String format, int n) throws DBexception {
 		String sql = " select l.player_name,l.nation,c.average,c.ranks from player_list l,player_career c where c.match_id=? and l.cap_no=c.cap_no and ranks <=? order by ranks asc";
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
 			stmt.setString(1, format);

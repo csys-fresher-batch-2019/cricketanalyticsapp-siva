@@ -19,7 +19,7 @@ public class TestRuns {
 			sc.close();
 			PlayerCareerDaoImp wen = new PlayerCareerDaoImp();
 			
-	        List<PlayerCareer> get = wen.listruns(Format);
+	        List<PlayerCareer> get = wen.listRuns(Format);
 	        
 	        for (PlayerCareer playerCareer : get) {
 	        	String name = playerCareer.getplayerName();

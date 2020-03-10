@@ -11,7 +11,7 @@ public class Testshowmatchdata {
 
 		MatchDataDaoImp obj = new MatchDataDaoImp();
 
-		List<MatchData> summ = obj.showmatchdetails("yet to update");
+		List<MatchData> summ = obj.showMatchDetails("yet to update");
 
 		for (MatchData m : summ) {
 			System.out.println(m.getCapNo());

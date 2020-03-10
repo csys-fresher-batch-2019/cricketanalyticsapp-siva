@@ -23,7 +23,7 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 	public void addPlayer(String capNo, String name, String nation, String style, int debutYear) throws DBexception {
 		String add = "insert into player_list(cap_no,player_name,nation,batting_style,debut_year) values (?,?,?,?,?)";
 		try (Connection con1 = TestConnection1.getConnection(); PreparedStatement stmt = con1.prepareStatement(add);) {
-			boolean check = validateplayerprofile(capNo);
+			boolean check = validatePlayerProfile(capNo);
 			if (check) {
 				stmt.setString(1, capNo);
 				stmt.setString(2, name);
@@ -57,13 +57,14 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 			row = st.executeUpdate();
 			logger.info(infoMessages.Updation);
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new DBexception(errorMessages.Invalid_capNo, e);
 		}
 		return row;
 	}
 
 	// List Players by Team
-	public List<PlayerProfile> playerlist(String nation) throws DBexception {
+	public List<PlayerProfile> playerListByNation(String nation) throws DBexception {
 		String sql = "select cap_no,player_name,batting_style,debut_year from player_list where nation =? and retired_year = 0";
 		try (Connection con1 = TestConnection1.getConnection(); PreparedStatement stmt = con1.prepareStatement(sql);) {
 			stmt.setString(1, nation);
@@ -81,6 +82,7 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 				return pl;
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new DBexception(errorMessages.Invalid_nation, e);
 		}
 	}
@@ -105,7 +107,7 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 	}
 
 	// Check Existing Player
-	public boolean validateplayerprofile(String capNo) throws DBexception {
+	public boolean validatePlayerProfile(String capNo) throws DBexception {
 		boolean check = true;
 		String valid = "select cap_no from player_career where cap_no=?";
 		try (Connection con1 = TestConnection1.getConnection();
@@ -126,7 +128,7 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 
 	@Override
 	// Check Retired Player
-	public boolean validateretiredplayer(String capno) throws DBexception {
+	public boolean validateRetiredPlayer(String capno) throws DBexception {
 		String valid = "select cap_no from player_list where cap_no=? and retired_year!=0";
 		boolean check = false;
 		try (Connection con1 = TestConnection1.getConnection();

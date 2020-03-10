@@ -11,11 +11,11 @@ public interface PlayerProfileDao {
 	
 	int updateRetiredYear(String capNo,int year) throws DBexception;
 	
-	List <PlayerProfile> playerlist (String nation) throws DBexception;
+	List <PlayerProfile> playerListByNation (String nation) throws DBexception;
 	
 	List<String> getPlayerName () throws DBexception ;
 	
-	boolean validateplayerprofile(String capno)throws DBexception;
+	boolean validatePlayerProfile(String capno)throws DBexception;
 	
-	boolean validateretiredplayer(String capno)throws DBexception;
+	boolean validateRetiredPlayer(String capno)throws DBexception;
 	}

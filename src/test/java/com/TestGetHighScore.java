@@ -20,7 +20,7 @@ public class TestGetHighScore {
 		sc.close();
 		PlayerCareerDaoImp wen = new PlayerCareerDaoImp();
 		
-        List<PlayerCareer> get = wen.listhighScore(Format);
+        List<PlayerCareer> get = wen.listHighScore(Format);
         
         for (PlayerCareer playerCareer : get) {
         	String name = playerCareer.getplayerName();

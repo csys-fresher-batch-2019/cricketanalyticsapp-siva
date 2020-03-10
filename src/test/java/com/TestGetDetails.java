@@ -17,7 +17,7 @@ public class TestGetDetails {
 		sc.close();
         PlayerCareerDaoImp p = new PlayerCareerDaoImp();
 		ArrayList<PlayerCareer> task1 = new ArrayList<PlayerCareer>();
-		task1 = (p.getdetails(name));
+		task1 = (p.getDetails(name));
        for (PlayerCareer res : task1) {
     	   logger.info(res.getCapNo());
     	   logger.info(res.getFormat());

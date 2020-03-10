@@ -18,20 +18,20 @@ public interface PlayerCareerDao {
 
 	void createT20Career(String capNo) throws DBexception;
 
-	ArrayList<PlayerCareer> getdetails(String capNo) throws DBexception;
+	ArrayList<PlayerCareer> getDetails(String capNo) throws DBexception;
 
-	List<PlayerCareer> listhighScore(String format) throws DBexception;
+	List<PlayerCareer> listHighScore(String format) throws DBexception;
 
-	List<PlayerCareer> listfifties(String format) throws DBexception;
+	List<PlayerCareer> listFifties(String format) throws DBexception;
 
-	List<PlayerCareer> listhundred(String format) throws DBexception;
+	List<PlayerCareer> listHundred(String format) throws DBexception;
 
-	List<PlayerCareer> listruns(String format) throws DBexception;
+	List<PlayerCareer> listRuns(String format) throws DBexception;
 
-	List<formatruns> searchbyformatruns(String format, int runs) throws DBexception;
+	List<formatruns> searchByFormatRuns(String format, int runs) throws DBexception;
 
-	void updaterank(String format) throws DBexception;
+	void updateRank(String format) throws DBexception;
 
-	List<PlayerCareer> displaytopbatsman(String format, int n) throws DBexception;
+	List<PlayerCareer> displayTopBatsman(String format, int n) throws DBexception;
 
 }

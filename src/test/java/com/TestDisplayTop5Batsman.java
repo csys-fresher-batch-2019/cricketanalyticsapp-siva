@@ -18,7 +18,7 @@ public class TestDisplayTop5Batsman {
         int a =sc.nextInt();
         sc.close();
 		PlayerCareerDaoImp vs =new PlayerCareerDaoImp();
-		List<PlayerCareer> bs = vs.displaytopbatsman(format,a);
+		List<PlayerCareer> bs = vs.displayTopBatsman(format,a);
 		for (PlayerCareer pc : bs) {
 			System.out.println(pc.getplayerName());
 			System.out.println(pc.getnation());
