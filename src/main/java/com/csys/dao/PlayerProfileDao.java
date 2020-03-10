@@ -2,19 +2,20 @@ package com.csys.dao;
 
 import java.util.List;
 
+import com.csys.exceptionmsg.DBexception;
 import com.csys.model.PlayerProfile;
 
 public interface PlayerProfileDao {
 	
-	void addPlayer(String capNo,String name,String nation,String Style,int debutYear) throws Exception;
+	void addPlayer(String capNo,String name,String nation,String Style,int debutYear) throws DBexception;
 	
-	int updateRetiredYear(String capNo,int year) throws Exception;
+	int updateRetiredYear(String capNo,int year) throws DBexception;
 	
-	List <PlayerProfile> playerlist (String nation) throws Exception;
+	List <PlayerProfile> playerlist (String nation) throws DBexception;
 	
-	List<String> getPlayerName () throws Exception ;
+	List<String> getPlayerName () throws DBexception ;
 	
-	boolean validateplayerprofile(String capno)throws Exception;
+	boolean validateplayerprofile(String capno)throws DBexception;
 	
-	boolean validateretiredplayer(String capno)throws Exception;
+	boolean validateretiredplayer(String capno)throws DBexception;
 	}

@@ -2,18 +2,18 @@ package com.csys.dao;
 
 import java.util.List;
 
+
+import com.csys.exceptionmsg.DBexception;
 import com.csys.model.MatchData;
 
 public interface MatchDataDao {
 
-	void addMatchDetail(String capNo, String format, int runs) throws Exception;
+	void addMatchDetail(String capNo, String format, int runs) throws DBexception;
 
-	void deleteMatchDetail() throws Exception;
+	void deleteMatchDetail() throws DBexception;
 
-	void updateCareer() throws Exception;
+	void updateCareer() throws DBexception;
 
-	boolean checkMatchDataDuringInsertion(String capNo, String format, int runs, String status) throws Exception;
-
-	List<MatchData> showmatchdetails(String status) throws Exception;
+	List<MatchData> showmatchdetails(String status) throws DBexception;
 
 }

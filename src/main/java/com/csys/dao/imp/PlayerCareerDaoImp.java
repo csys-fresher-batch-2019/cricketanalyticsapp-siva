@@ -3,6 +3,7 @@ package com.csys.dao.imp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,28 +20,77 @@ import com.csys.util.TestConnection1;
 public class PlayerCareerDaoImp implements PlayerCareerDao {
 	Logger logger = new Logger();
 
+	// create career for new player in all formats
 	public void createNewCareer(String capNo) throws DBexception {
-		try (Connection con1 = TestConnection1.getConnection(); Statement stmt = con1.createStatement();) {
-			String sqladd1 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"
-					+ capNo + "','odi',0,0,0,0,0)";
-			String sqladd2 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"
-					+ capNo + "','test',0,0,0,0,0)";
-			String sqladd3 = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values('"
-					+ capNo + "','t20',0,0,0,0,0)";
-			logger.info(sqladd1);
-			int rows = stmt.executeUpdate(sqladd1);
-			int rows1 = stmt.executeUpdate(sqladd2);
-			int rows2 = stmt.executeUpdate(sqladd3);
-			logger.info(rows);
-			logger.info(rows1);
-			logger.info(rows2);
-			logger.info(infoMessages.Insert_Message);
+		createOdiCareer(capNo);
+		createTestCareer(capNo);
+		createT20Career(capNo);
+	}
 
-		} catch (Exception e) {
+	// create t20 career
+	public void createT20Career(String capNo) throws DBexception {
+		String query = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values(?,?,?,?,?,?,?)";
+		try (Connection con1 = TestConnection1.getConnection();) {
+			try (PreparedStatement stmt = con1.prepareStatement(query);) {
+				stmt.setString(1, capNo);
+				stmt.setString(2, "t20");
+				stmt.setInt(3, 0);
+				stmt.setInt(4, 0);
+				stmt.setInt(5, 0);
+				stmt.setInt(6, 0);
+				stmt.setInt(7, 0);
+				stmt.executeUpdate();
+				logger.info(infoMessages.Insert_Message);
+
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DBexception(e);
 		}
 	}
 
+	// create test career
+	public void createTestCareer(String capNo) throws DBexception {
+		String query = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values(?,?,?,?,?,?,?)";
+		try (Connection con1 = TestConnection1.getConnection();
+				PreparedStatement stmt = con1.prepareStatement(query);) {
+			stmt.setString(1, capNo);
+			stmt.setString(2, "test");
+			stmt.setInt(3, 0);
+			stmt.setInt(4, 0);
+			stmt.setInt(5, 0);
+			stmt.setInt(6, 0);
+			stmt.setInt(7, 0);
+			stmt.executeUpdate();
+			logger.info(infoMessages.Insert_Message);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			throw new DBexception(e1);
+		}
+
+	}
+
+	// create odi career
+	public void createOdiCareer(String capNo) throws DBexception {
+		String query = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score) values(?,?,?,?,?,?,?)";
+		try (Connection con1 = TestConnection1.getConnection();
+				PreparedStatement stmt = con1.prepareStatement(query);) {
+			stmt.setString(1, capNo);
+			stmt.setString(2, "odi");
+			stmt.setInt(3, 0);
+			stmt.setInt(4, 0);
+			stmt.setInt(5, 0);
+			stmt.setInt(6, 0);
+			stmt.setInt(7, 0);
+			stmt.executeUpdate();
+			logger.info(infoMessages.Insert_Message);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBexception(errorMessages.Connection, e);
+		}
+	}
+
+	// Get career details for given player
 	public ArrayList<PlayerCareer> getdetails(String name) throws DBexception {
 		try (Connection con1 = TestConnection1.getConnection(); Statement stmt = con1.createStatement();) {
 			ArrayList<PlayerCareer> task = new ArrayList<>();
@@ -74,12 +124,13 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 				}
 			}
 			return task;
-		} catch (Exception e) {
-			throw new DBexception(errorMessages.Invalid_Name);
+		} catch (SQLException e) {
+			throw new DBexception(e);
 		}
 
 	}
 
+	// List highScore along with playername for given format in a descending order
 	public List<PlayerCareer> listhighScore(String format) throws DBexception {
 		String sql = "select l.player_name,c.high_score from player_list l,player_career c where c.match_id=? and l.cap_no = c.cap_no and high_score>100 order by high_score DESC";
 
@@ -95,12 +146,15 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 				}
 				return bst;
 			}
-		} catch (Exception e) {
-			throw new DBexception(errorMessages.Invalid_Format);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBexception(e);
 		}
 	}
 
-	public List<PlayerCareer> listhundred(String format) throws Exception {
+	// List number of hundreds along with playername for given format in a
+	// descending order
+	public List<PlayerCareer> listhundred(String format) throws DBexception {
 		String sql = "select l.player_name,c.hundred from player_list l,player_career c where c.match_id=? and l.cap_no = c.cap_no and hundred>0 order by hundred DESC";
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
 			stmt.setString(1, format);
@@ -115,12 +169,15 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 				}
 				return bst;
 			}
-		} catch (Exception e) {
-			throw new DBexception(errorMessages.Invalid_Format);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBexception(errorMessages.Invalid_Format, e);
 		}
 	}
 
-	public List<PlayerCareer> listfifties(String format) throws Exception {
+	// List number of fifties along with playername for given format in a descending
+	// order
+	public List<PlayerCareer> listfifties(String format) throws DBexception {
 		String sql2 = "select l.player_name,c.fifty from player_list l,player_career c where c.match_id=? and l.cap_no = c.cap_no and fifty>0 order by fifty DESC";
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql2);) {
 			stmt.setString(1, format);
@@ -134,12 +191,15 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 				}
 				return bst;
 			}
-		} catch (Exception e) {
-			throw new DBexception(errorMessages.Invalid_Format);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBexception(errorMessages.Invalid_Format, e);
 		}
 	}
 
-	public List<PlayerCareer> listruns(String format) throws Exception {
+	// List more of runs along with player name for given format in a descending
+	// order
+	public List<PlayerCareer> listruns(String format) throws DBexception {
 		String sql3 = "select l.player_name,c.runs from player_list l,player_career c where c.match_id=? and l.cap_no = c.cap_no and runs>1000 order by runs DESC";
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql3);) {
 			stmt.setString(1, format);
@@ -153,8 +213,9 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 				}
 				return bst;
 			}
-		} catch (Exception e) {
-			throw new DBexception(errorMessages.Invalid_Format);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBexception(errorMessages.Invalid_Format, e);
 		}
 
 	}
@@ -181,12 +242,14 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 				}
 				return bst;
 			}
-		} catch (Exception e) {
-			throw new DBexception(errorMessages.Invalid_Format);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBexception(errorMessages.Invalid_Format, e);
 		}
 	}
 
-	public void updaterank(String format) throws Exception {
+	// Update rank
+	public void updaterank(String format) throws DBexception {
 		String sql = "select c.cap_no, l.player_name,l.nation,c.average from player_list l,player_career c where c.match_id=? and l.cap_no=c.cap_no and l.retired_year= 0 and c.average>0 order by c.average DESC";
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
 			stmt.setString(1, format);
@@ -212,12 +275,14 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 				}
 				logger.info(infoMessages.Updation);
 			}
-		} catch (Exception e) {
-			throw new DBexception(errorMessages.Invalid_Format);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBexception(errorMessages.Invalid_Format, e);
 		}
 	}
 
-	public List<PlayerCareer> displaytopbatsman(String format, int n) throws Exception {
+	// Display Top Batsman for given format
+	public List<PlayerCareer> displaytopbatsman(String format, int n) throws DBexception {
 		String sql = " select l.player_name,l.nation,c.average,c.ranks from player_list l,player_career c where c.match_id=? and l.cap_no=c.cap_no and ranks <=? order by ranks asc";
 		try (Connection con = TestConnection1.getConnection(); PreparedStatement stmt = con.prepareStatement(sql);) {
 			stmt.setString(1, format);
@@ -234,46 +299,10 @@ public class PlayerCareerDaoImp implements PlayerCareerDao {
 				}
 				return dtb;
 			}
-		} catch (Exception e) {
-			throw new DBexception(errorMessages.Invalid_Format_case);
-		}
-	}
-
-	public boolean checkinsertCareerDetailForSpecificFormat(String capNo, String format) throws Exception {
-		boolean valid = false;
-		String check = "select cap_no,match_id from player_career where cap_no=? and match_id=?";
-		try (Connection connect = TestConnection1.getConnection();
-				PreparedStatement pst = connect.prepareStatement(check);) {
-			pst.setString(1, capNo);
-			pst.setString(2, format);
-			try (ResultSet rs = pst.executeQuery()) {
-				if (rs.next()) {
-					valid = true;
-				}
-			}
-
-		}
-		return valid;
-	}
-
-	public void insertCareerDetailForSpecificFormat(String capNo, String format, int matches, int runs, int fifty,
-			int hundred, int best, float average) throws Exception {
-		String insert = "insert into player_career(cap_no,match_id,matches,runs,fifty,hundred,high_score,average) values (?,?,?,?,?,?,?,?) ";
-		try (Connection connect = TestConnection1.getConnection();
-				PreparedStatement pst = connect.prepareStatement(insert);) {
-			pst.setString(1, capNo);
-			pst.setString(2, format);
-			pst.setInt(3, matches);
-			pst.setInt(4, runs);
-			pst.setInt(5, fifty);
-			pst.setInt(6, hundred);
-			pst.setInt(7, best);
-			pst.setFloat(8, average);
-			pst.executeUpdate();
-			logger.info(infoMessages.Insert_Message);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DBexception(errorMessages.Invalid_Format_case, e);
 		}
 	}
 
-	}
+}

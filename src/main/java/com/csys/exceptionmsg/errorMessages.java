@@ -10,6 +10,6 @@ public class errorMessages {
     public static final String Invalid_Format_case = "Invalid format/value of case";
     public static final String Invalid_capNo = "Invalid Cap Number";
     public static final String Invalid_nation="Nation not found";
-    public static final String Connection = "Connection Timed out";
+    public static final String Connection = "Connection Problem";
     public static final String match_data_res = "No data found";
 }

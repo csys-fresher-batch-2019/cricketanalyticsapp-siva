@@ -1,11 +1,12 @@
 package com.csys.dao.imp;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.csys.dao.PlayerProfileDao;
 import com.csys.exceptionmsg.DBexception;
 import com.csys.exceptionmsg.errorMessages;
@@ -18,15 +19,19 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 
 	Logger logger = new Logger();
 
-	public void addPlayer(String capNo, String name, String nation, String style, int debutYear) throws Exception {
-
-		try (Connection con1 = TestConnection1.getConnection(); Statement stmt = con1.createStatement();) {
+	// create new player
+	public void addPlayer(String capNo, String name, String nation, String style, int debutYear) throws DBexception {
+		String add = "insert into player_list(cap_no,player_name,nation,batting_style,debut_year) values (?,?,?,?,?)";
+		try (Connection con1 = TestConnection1.getConnection(); PreparedStatement stmt = con1.prepareStatement(add);) {
 			boolean check = validateplayerprofile(capNo);
 			if (check) {
-				String add = "insert into player_list(cap_no,player_name,nation,batting_style,debut_year) values ('"
-						+ capNo + "','" + name + "','" + nation + "','" + style + "'," + debutYear + ")";
+				stmt.setString(1, capNo);
+				stmt.setString(2, name);
+				stmt.setString(3, nation);
+				stmt.setString(4, style);
+				stmt.setInt(5, debutYear);
 				logger.info(add);
-				int rows = stmt.executeUpdate(add);
+				int rows = stmt.executeUpdate();
 				logger.info(rows);
 				PlayerCareerDaoImp method = new PlayerCareerDaoImp();
 				method.createNewCareer(capNo);
@@ -34,31 +39,36 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 			} else {
 				logger.info(infoMessages.Duplicate_message);
 			}
-		} catch (Exception e) {
-			throw new DBexception(errorMessages.NonSpecifyColumn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBexception(errorMessages.NonSpecifyColumn, e);
 		}
 
 	}
 
+	// update retired year
 	public int updateRetiredYear(String capNo, int year) throws DBexception {
 		int row = 0;
-		try (Connection con1 = TestConnection1.getConnection(); Statement st = con1.createStatement();) {
-			String sql = "update player_list set retired_year = " + year + " where cap_no = '" + capNo + "'";
+		String sql = "update player_list set retired_year = ? where cap_no = ?";
+		try (Connection con1 = TestConnection1.getConnection(); PreparedStatement st = con1.prepareStatement(sql);) {
+			st.setInt(1, year);
+			st.setString(2, capNo);
 			logger.info(sql);
-			row = st.executeUpdate(sql);
+			row = st.executeUpdate();
 			logger.info(infoMessages.Updation);
-		} catch (Exception e) {
-			throw new DBexception(errorMessages.Invalid_capNo);
+		} catch (SQLException e) {
+			throw new DBexception(errorMessages.Invalid_capNo, e);
 		}
 		return row;
 	}
 
+	// List Players by Team
 	public List<PlayerProfile> playerlist(String nation) throws DBexception {
-		try (Connection con1 = TestConnection1.getConnection(); Statement stmt = con1.createStatement();) {
-			String sql = "select cap_no,player_name,batting_style,debut_year from player_list where nation ='" + nation
-					+ "' and retired_year = 0";
+		String sql = "select cap_no,player_name,batting_style,debut_year from player_list where nation =? and retired_year = 0";
+		try (Connection con1 = TestConnection1.getConnection(); PreparedStatement stmt = con1.prepareStatement(sql);) {
+			stmt.setString(1, nation);
 			logger.info(sql);
-			try (ResultSet rs = stmt.executeQuery(sql);) {
+			try (ResultSet rs = stmt.executeQuery();) {
 				List<PlayerProfile> pl = new ArrayList<PlayerProfile>();
 				while (rs.next()) {
 					PlayerProfile pp = new PlayerProfile();
@@ -70,11 +80,12 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 				}
 				return pl;
 			}
-		} catch (Exception e) {
-			throw new DBexception(errorMessages.Invalid_nation);
+		} catch (SQLException e) {
+			throw new DBexception(errorMessages.Invalid_nation, e);
 		}
 	}
 
+	// List Player Name
 	public List<String> getPlayerName() throws DBexception {
 		try (Connection con1 = TestConnection1.getConnection(); Statement stmt = con1.createStatement();) {
 			String sql = "select player_name from player_list";
@@ -87,37 +98,48 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 				}
 				return pl;
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DBexception(errorMessages.Connection);
+			throw new DBexception(e);
 		}
 	}
 
-	public boolean validateplayerprofile(String capNo) throws Exception {
+	// Check Existing Player
+	public boolean validateplayerprofile(String capNo) throws DBexception {
 		boolean check = true;
-		try (Connection con1 = TestConnection1.getConnection(); Statement stmt = con1.createStatement();) {
-			try (ResultSet res = stmt.executeQuery("select cap_no from player_career where cap_no='" + capNo + "'");) {
+		String valid = "select cap_no from player_career where cap_no=?";
+		try (Connection con1 = TestConnection1.getConnection();
+				PreparedStatement stmt = con1.prepareStatement(valid);) {
+			stmt.setString(1, capNo);
+			try (ResultSet res = stmt.executeQuery();) {
 				if (res.next()) {
 					check = false;
 				}
 			}
 			con1.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBexception(errorMessages.Invalid_capNo, e);
 		}
 		return check;
 	}
 
 	@Override
-	public boolean validateretiredplayer(String capno) throws Exception {
-
+	// Check Retired Player
+	public boolean validateretiredplayer(String capno) throws DBexception {
+		String valid = "select cap_no from player_list where cap_no=? and retired_year!=0";
 		boolean check = false;
-		try (Connection con1 = TestConnection1.getConnection(); Statement stmt = con1.createStatement();) {
-			try (ResultSet res = stmt
-					.executeQuery("select cap_no from player_list where cap_no='" + capno + "' and retired_year!=0");) {
+		try (Connection con1 = TestConnection1.getConnection();
+				PreparedStatement stmt = con1.prepareStatement(valid);) {
+			try (ResultSet res = stmt.executeQuery();) {
 				if (res.next()) {
 					check = true;
 				}
 			}
 			con1.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBexception(errorMessages.Invalid_capNo, e);
 		}
 		return check;
 	}

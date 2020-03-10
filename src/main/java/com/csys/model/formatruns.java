@@ -12,26 +12,17 @@ public class formatruns {
 		return playerName;
 	}
 
-
-	/**
-	 * @param playerName the playerName to set
-	 */
 	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
 	}
 
 
-	/**
-	 * @return the runs
-	 */
+	
 	public int getRuns() {
 		return runs;
 	}
 
 
-	/**
-	 * @param runs the runs to set
-	 */
 	public void setRuns(int runs) {
 		this.runs = runs;
 	}
