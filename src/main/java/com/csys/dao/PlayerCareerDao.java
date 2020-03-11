@@ -1,22 +1,15 @@
 package com.csys.dao;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.csys.exception.DBexception;
 import com.csys.model.PlayerCareer;
-import com.csys.model.formatruns;
+import com.csys.model.formatRuns;
 
 public interface PlayerCareerDao {
 
-	void createNewCareer(String capNo) throws DBexception;
-
-	void createOdiCareer(String capNo) throws DBexception;
-
-	void createTestCareer(String capNo) throws DBexception;
-
-	void createT20Career(String capNo) throws DBexception;
+	void createNewCareer(String capNo, String format1, String format2, String format3) throws DBexception;
 
 	ArrayList<PlayerCareer> getDetails(String capNo) throws DBexception;
 
@@ -28,7 +21,7 @@ public interface PlayerCareerDao {
 
 	List<PlayerCareer> listRuns(String format) throws DBexception;
 
-	List<formatruns> searchByFormatRuns(String format, int runs) throws DBexception;
+	List<formatRuns> searchByFormatRuns(String format, int runs) throws DBexception;
 
 	void updateRank(String format) throws DBexception;
 

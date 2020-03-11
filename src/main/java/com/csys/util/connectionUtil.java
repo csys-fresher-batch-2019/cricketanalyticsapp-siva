@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import com.csys.exception.DBexception;
 
-public class TestConnection1 {
+public class connectionUtil {
 
 	public static Connection getConnection() throws DBexception {
 		// String server = "192.168.56.215";
@@ -16,7 +16,6 @@ public class TestConnection1 {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			String server = "localhost";
 			connection = DriverManager.getConnection("jdbc:oracle:thin:@" + server + ":1521:XE", "system", "oracle");
-			System.out.println(connection);
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

@@ -20,8 +20,8 @@ public class TestDisplayTop5Batsman {
 		PlayerCareerDaoImp vs =new PlayerCareerDaoImp();
 		List<PlayerCareer> bs = vs.displayTopBatsman(format,a);
 		for (PlayerCareer pc : bs) {
-			System.out.println(pc.getplayerName());
-			System.out.println(pc.getnation());
+			System.out.println(pc.getPlayerName());
+			System.out.println(pc.getNation());
 			System.out.println(pc.getAverage());
 			System.out.println(pc.getRanks());
 			System.out.println("\n");

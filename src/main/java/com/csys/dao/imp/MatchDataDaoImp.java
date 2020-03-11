@@ -10,24 +10,26 @@ import java.util.List;
 
 import com.csys.dao.MatchDataDao;
 import com.csys.exception.DBexception;
-import com.csys.exception.errorMessages;
 import com.csys.exception.infoMessages;
 import com.csys.model.MatchData;
 import com.csys.util.Logger;
-import com.csys.util.TestConnection1;
+import com.csys.util.connectionUtil;
 
 public class MatchDataDaoImp implements MatchDataDao {
 	Logger logger = new Logger();
 
-	// Add match summary
+	/**
+	 * Add match summary
+	 *
+	 */
 	public void addMatchDetail(String capNo, String format, int runs) throws DBexception {
-		try (Connection res = TestConnection1.getConnection();) {
-			String sqladd = "insert into match_data(cap_no,match_type,runs) values (?,?,?)";
-			try (PreparedStatement arr = res.prepareStatement(sqladd);) {
-				arr.setString(1, capNo);
-				arr.setString(2, format);
-				arr.setInt(3, runs);
-				arr.executeUpdate();
+		try (Connection res = connectionUtil.getConnection();) {
+			String sql = "insert into match_data(cap_no,match_type,runs) values (?,?,?)";
+			try (PreparedStatement pst = res.prepareStatement(sql);) {
+				pst.setString(1, capNo);
+				pst.setString(2, format);
+				pst.setInt(3, runs);
+				pst.executeUpdate();
 				logger.info(infoMessages.Add_Match_Detail);
 			}
 		} catch (SQLException e) {
@@ -36,14 +38,17 @@ public class MatchDataDaoImp implements MatchDataDao {
 		}
 	}
 
-	// Delete match summary
-	public void deleteMatchDetail() throws DBexception {
+	/**
+	 * Delete match summary
+	 * 
+	 */
+	public void deleteMatchDetail(String status) throws DBexception {
 
 		String sqldelete = "delete from match_data where status =?";
-		try (Connection res = TestConnection1.getConnection();
-				PreparedStatement arr = res.prepareStatement(sqldelete);) {
-			arr.setString(1, "updated");
-			arr.executeUpdate();
+		try (Connection res = connectionUtil.getConnection();
+				PreparedStatement pst = res.prepareStatement(sqldelete);) {
+			pst.setString(1, status);
+			pst.executeUpdate();
 			logger.info(infoMessages.Delete_Match_Detail);
 
 		} catch (SQLException e) {
@@ -52,23 +57,27 @@ public class MatchDataDaoImp implements MatchDataDao {
 		}
 	}
 
-	// update career for existing players in respective formats
-	public void updateCareer() throws DBexception {
-		String status = "yet to update";
-		try (Connection ci = TestConnection1.getConnection();
+	/**
+	 * update career for existing players in respective formats
+	 * 
+	 */
+	public void updateCareer(String status) throws DBexception {
+
+		String format = null;
+		try (Connection ci = connectionUtil.getConnection();
 				CallableStatement cs = ci.prepareCall("{ call update_career(?,?,?)}");) {
 			List<MatchData> summary = showNotUpdateData(status);
 			for (MatchData obj : summary) {
 				String capNo = obj.getCapNo();
-				String format = obj.getFormat();
+				format = obj.getFormat();
 				int runs = obj.getRuns();
 				cs.setString(1, capNo);
 				cs.setString(2, format);
 				cs.setInt(3, runs);
 				cs.execute();
-				PlayerCareerDaoImp object = new PlayerCareerDaoImp();
-				object.updateRank(format);
 			}
+			PlayerCareerDaoImp object = new PlayerCareerDaoImp();
+			object.updateRank(format);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -78,13 +87,16 @@ public class MatchDataDaoImp implements MatchDataDao {
 	}
 
 	@Override
-	// view match summary
+	/**
+	 * view match summary
+	 * 
+	 */
 	public List<MatchData> showMatchDetails(String status) throws DBexception {
-		String sql = "select * from match_data where status=?";
+		String sql = "select cap_no,match_type,runs,status from match_data where status=?";
 		List<MatchData> summary = new ArrayList<>();
-		try (Connection ci = TestConnection1.getConnection(); PreparedStatement arr = ci.prepareStatement(sql);) {
-			arr.setString(1, status);
-			try (ResultSet rs = arr.executeQuery();) {
+		try (Connection ci = connectionUtil.getConnection(); PreparedStatement pst = ci.prepareStatement(sql);) {
+			pst.setString(1, status);
+			try (ResultSet rs = pst.executeQuery();) {
 				while (rs.next()) {
 					MatchData md = new MatchData();
 					md.setCapNo(rs.getString("cap_no"));
@@ -104,12 +116,16 @@ public class MatchDataDaoImp implements MatchDataDao {
 
 	}
 
+	/**
+	 * Get Non-Updated Data
+	 * 
+	 */
 	private List<MatchData> showNotUpdateData(String status) throws DBexception {
 		String sql = "select cap_no,match_type,runs from match_data where status=?";
 		List<MatchData> summary = new ArrayList<>();
-		try (Connection ci = TestConnection1.getConnection(); PreparedStatement arr = ci.prepareStatement(sql);) {
-			arr.setString(1, "yet to update");
-			try (ResultSet rs = arr.executeQuery();) {
+		try (Connection ci = connectionUtil.getConnection(); PreparedStatement pst = ci.prepareStatement(sql);) {
+			pst.setString(1, status);
+			try (ResultSet rs = pst.executeQuery();) {
 				while (rs.next()) {
 					MatchData md = new MatchData();
 					md.setCapNo(rs.getString("cap_no"));

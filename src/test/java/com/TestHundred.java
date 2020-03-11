@@ -22,7 +22,7 @@ public class TestHundred {
 	        List<PlayerCareer> get = wen.listHundred(Format);
 	     
 	        for (PlayerCareer playerCareer : get) {
-	        	String name = playerCareer.getplayerName();
+	        	String name = playerCareer.getPlayerName();
 	        	int hundred =playerCareer.getHundred();
 	        	
 				logger.info(name +"\t"+ hundred);

@@ -22,7 +22,7 @@ public class TestGetFifty {
         List<PlayerCareer> get = wen.listFifties(Format);
         
         for (PlayerCareer playerCareer : get) {
-        	String name = playerCareer.getplayerName();
+        	String name = playerCareer.getPlayerName();
         	int fifty =playerCareer.getFifty();
         	
 			logger.info(name +"\t"+ fifty);

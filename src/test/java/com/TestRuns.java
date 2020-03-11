@@ -22,7 +22,7 @@ public class TestRuns {
 	        List<PlayerCareer> get = wen.listRuns(Format);
 	        
 	        for (PlayerCareer playerCareer : get) {
-	        	String name = playerCareer.getplayerName();
+	        	String name = playerCareer.getPlayerName();
 	        	int runs =playerCareer.getRuns();
 	        	
 				logger.info(name +"\t"+ runs);

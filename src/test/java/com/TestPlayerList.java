@@ -15,7 +15,7 @@ public class TestPlayerList {
 		logger.info("Enter the nation");
 		String nation = sc.next();
 		PlayerProfileDaoImplementation ppdi = new PlayerProfileDaoImplementation();
-		List<PlayerProfile> hd = ppdi.playerlist(nation);
+		List<PlayerProfile> hd = ppdi.playerListByNation(nation);
 		for (PlayerProfile pp : hd) {
 			logger.info(pp);
 		}

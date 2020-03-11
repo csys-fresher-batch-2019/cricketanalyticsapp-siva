@@ -7,22 +7,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.csys.dao.PlayerProfileDao;
 import com.csys.exception.DBexception;
 import com.csys.exception.errorMessages;
 import com.csys.exception.infoMessages;
 import com.csys.model.PlayerProfile;
 import com.csys.util.Logger;
-import com.csys.util.TestConnection1;
+import com.csys.util.connectionUtil;
 
 public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 
 	Logger logger = new Logger();
 
-	// create new player
-	public void addPlayer(String capNo, String name, String nation, String style, int debutYear) throws DBexception {
+	/**
+	 * create new player
+	 * 
+	 */
+	public void addPlayer(String capNo, String name, String nation, String style, int debutYear, String format1,
+			String format2, String format3) throws DBexception {
 		String add = "insert into player_list(cap_no,player_name,nation,batting_style,debut_year) values (?,?,?,?,?)";
-		try (Connection con1 = TestConnection1.getConnection(); PreparedStatement stmt = con1.prepareStatement(add);) {
+		try (Connection con1 = connectionUtil.getConnection(); PreparedStatement stmt = con1.prepareStatement(add);) {
 			boolean check = validatePlayerProfile(capNo);
 			if (check) {
 				stmt.setString(1, capNo);
@@ -34,7 +39,7 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 				int rows = stmt.executeUpdate();
 				logger.info(rows);
 				PlayerCareerDaoImp method = new PlayerCareerDaoImp();
-				method.createNewCareer(capNo);
+				method.createNewCareer(capNo, format1, format2, format3);
 				logger.info(infoMessages.Insert_Message);
 			} else {
 				logger.info(infoMessages.Duplicate_message);
@@ -46,11 +51,14 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 
 	}
 
-	// update retired year
+	/**
+	 * update retired year
+	 * 
+	 */
 	public int updateRetiredYear(String capNo, int year) throws DBexception {
 		int row = 0;
 		String sql = "update player_list set retired_year = ? where cap_no = ?";
-		try (Connection con1 = TestConnection1.getConnection(); PreparedStatement st = con1.prepareStatement(sql);) {
+		try (Connection con1 = connectionUtil.getConnection(); PreparedStatement st = con1.prepareStatement(sql);) {
 			st.setInt(1, year);
 			st.setString(2, capNo);
 			logger.info(sql);
@@ -63,10 +71,13 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 		return row;
 	}
 
-	// List Players by Team
+	/**
+	 * List Players by Team
+	 * 
+	 */
 	public List<PlayerProfile> playerListByNation(String nation) throws DBexception {
-		String sql = "select cap_no,player_name,batting_style,debut_year from player_list where nation =? and retired_year = 0";
-		try (Connection con1 = TestConnection1.getConnection(); PreparedStatement stmt = con1.prepareStatement(sql);) {
+		String sql = "select cap_no,player_name,batting_style,debut_year from player_list where nation =? and retired_year is null";
+		try (Connection con1 = connectionUtil.getConnection(); PreparedStatement stmt = con1.prepareStatement(sql);) {
 			stmt.setString(1, nation);
 			logger.info(sql);
 			try (ResultSet rs = stmt.executeQuery();) {
@@ -87,9 +98,12 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 		}
 	}
 
-	// List Player Name
+	/**
+	 * List Player Name
+	 * 
+	 */
 	public List<String> getPlayerName() throws DBexception {
-		try (Connection con1 = TestConnection1.getConnection(); Statement stmt = con1.createStatement();) {
+		try (Connection con1 = connectionUtil.getConnection(); Statement stmt = con1.createStatement();) {
 			String sql = "select player_name from player_list";
 			logger.info(sql);
 			try (ResultSet rs = stmt.executeQuery(sql);) {
@@ -106,19 +120,21 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 		}
 	}
 
-	// Check Existing Player
+	/**
+	 * Check Existing Player
+	 * 
+	 */
 	public boolean validatePlayerProfile(String capNo) throws DBexception {
 		boolean check = true;
-		String valid = "select cap_no from player_career where cap_no=?";
-		try (Connection con1 = TestConnection1.getConnection();
-				PreparedStatement stmt = con1.prepareStatement(valid);) {
+		String valid = "select cap_no from player_list where cap_no=?";
+		try (Connection con1 = connectionUtil.getConnection(); PreparedStatement stmt = con1.prepareStatement(valid);) {
 			stmt.setString(1, capNo);
 			try (ResultSet res = stmt.executeQuery();) {
 				if (res.next()) {
 					check = false;
 				}
 			}
-			con1.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DBexception(errorMessages.Invalid_capNo, e);
@@ -127,18 +143,20 @@ public class PlayerProfileDaoImplementation implements PlayerProfileDao {
 	}
 
 	@Override
-	// Check Retired Player
+	/**
+	 * Check Retired Player
+	 * 
+	 */
 	public boolean validateRetiredPlayer(String capno) throws DBexception {
-		String valid = "select cap_no from player_list where cap_no=? and retired_year!=0";
+		String valid = "select cap_no from player_list where cap_no=? and retired_year is not null";
 		boolean check = false;
-		try (Connection con1 = TestConnection1.getConnection();
-				PreparedStatement stmt = con1.prepareStatement(valid);) {
+		try (Connection con1 = connectionUtil.getConnection(); PreparedStatement stmt = con1.prepareStatement(valid);) {
 			try (ResultSet res = stmt.executeQuery();) {
 				if (res.next()) {
 					check = true;
 				}
 			}
-			con1.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DBexception(errorMessages.Invalid_capNo, e);

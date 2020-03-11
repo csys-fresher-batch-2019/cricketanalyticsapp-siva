@@ -23,7 +23,7 @@ public class TestGetHighScore {
         List<PlayerCareer> get = wen.listHighScore(Format);
         
         for (PlayerCareer playerCareer : get) {
-        	String name = playerCareer.getplayerName();
+        	String name = playerCareer.getPlayerName();
         	int Score =playerCareer.getBest();
         	
 			logger.info(name +"\t"+ Score);
